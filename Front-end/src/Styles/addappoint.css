@@ -1,0 +1,10 @@
+.add_button {
+  background-color: rgb(49, 51, 58);
+  border: none;
+  border-radius: 15px;
+  width: 60px;
+  height: 40px;
+  color: white;
+  margin-right: 10px;
+  cursor: pointer;
+}

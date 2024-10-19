@@ -1,0 +1,51 @@
+/* Home container style */
+.home_container {
+  display: flex;
+  transition: margin-left 0.3s ease;
+}
+
+.content {
+  margin-left: 60px;
+  padding: 20px;
+  width: 100%;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar:hover ~ .content {
+  margin-left: 250px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+.header_logo {
+  width: 60px;
+  border-radius: 8px;
+}
+.welcome_text {
+  font-size: 35px;
+  font-weight: 400;
+}
+.header_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header_span {
+  font-size: 20px;
+}
+.first_line {
+  margin-bottom: 40px;
+}
+.second_line {
+  margin-bottom: 20px;
+  margin-top: 12px;
+}

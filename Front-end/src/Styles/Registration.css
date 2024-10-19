@@ -1,0 +1,66 @@
+.container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(49, 51, 58);
+  width: 50%;
+  height: 600px;
+  border-radius: 8px;
+}
+.container_login {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(49, 51, 58);
+  width: 50%;
+  height: 400px;
+  border-radius: 8px;
+}
+.container_login h2 {
+  text-align: center;
+  color: white;
+}
+.container h2 {
+  text-align: center;
+  color: white;
+}
+
+.registartion_form {
+  display: flex;
+  flex-direction: column;
+}
+.reg_input {
+  width: 50%;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  padding-left: 12px;
+  padding-right: 10px;
+  margin-left: 50px;
+  margin-top: 10px;
+}
+.reg_label {
+  margin-left: 20px;
+  margin-top: 10px;
+  color: white;
+}
+.reg_button {
+  width: 40%;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgb(99, 98, 98);
+  color: white;
+  margin: 20px 0 0 91px;
+  cursor: pointer;
+}
+.to_login {
+  color: white;
+  margin-top: 12px;
+  margin-left: 50px;
+}
+.auth_links {
+  color: white;
+}
