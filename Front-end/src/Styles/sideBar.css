@@ -27,7 +27,7 @@
 }
 
 .sidebar-item:hover {
-  background-color: #34495e;
+  background-color: rgb(52, 73, 94);
   border-radius: 12px;
 }
 
@@ -52,12 +52,14 @@
   display: flex;
   align-items: center;
   justify-content: start;
-  width: 75%;
+  width: 90%;
   padding: 15px;
-  margin-left: 12px;
+  margin-bottom: 12px;
+  margin-left: 0;
   color: white;
-  background-color: transparent;
+  background-color: rgb(31, 32, 37);
   border: none;
+  border-radius: 12px;
   cursor: pointer;
   position: absolute;
   bottom: 20px;
@@ -65,7 +67,7 @@
 }
 
 .logout_button:hover {
-  background-color: #34495e;
+  background-color: rgb(39, 59, 80);
   border-radius: 12px;
 }
 

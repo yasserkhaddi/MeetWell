@@ -38,6 +38,69 @@ class userController {
       res.status(500).json({ message: "Internal server error" });
     }
   }
+  //edit user
+  edit(req, res) {
+    try {
+      if (req.user.id === req.params.id) {
+        user
+          .edit(req.user.id, req.body)
+          .then((r) => {
+            res.status(r.status).json(r.message);
+          })
+          .catch((err) => {
+            console.error(err);
+            res.status(500).json({ message: "Internal server error" });
+          });
+      } else {
+        res.status(403).json({ message: "Forbidden access (Controller)" });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  //verifyPass
+  verifyPassword(req, res) {
+    try {
+      if (req.user.id === req.body.id) {
+        user
+          .verifyPassword(req.user.id)
+          .then((r) => {
+            res.status(r.status).json({ message: r.message, valid: r.valid });
+          })
+          .catch((err) => {
+            console.error(err);
+            res.status(500).json({ message: "Internal server error" });
+          });
+      } else {
+        res.status(403).json({ message: "Forbidden access (Controller)" });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  //adding phone number
+  addPhoneNubmer(req, res) {
+    try {
+      if (req.user.id === req.params.id) {
+        user
+          .addPhoneNubmer(req.user.id, req.body)
+          .then((r) => {
+            res.status(r.status).json(r.message);
+          })
+          .catch((err) => {
+            console.error(err);
+            res.status(500).json({ message: "Internal server error" });
+          });
+      } else {
+        res.status(403).json({ message: "Forbidden access (Controller)" });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }
 
 module.exports = userController;

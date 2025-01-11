@@ -1,0 +1,27 @@
+.sidebar:hover ~ .profile_bar_second {
+  margin-left: 250px;
+}
+.profile_bar_second {
+  margin-left: 60px;
+  transition: margin-left 0.3s ease;
+}
+.profile_container {
+  display: flex;
+  flex-direction: row;
+}
+.profile_content {
+  padding: 20px;
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  transition: margin-left 0.3s ease;
+}
+.profile_component {
+  padding: 20px;
+}
+.profileheader {
+  width: 100%;
+  display: flex;
+}
+.profileheader_left {
+  width: 100%;
+}

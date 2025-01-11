@@ -1,0 +1,29 @@
+.profile_bar {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  background-color: rgb(37, 39, 39);
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  transition: margin-left 0.3s ease;
+}
+.profile_bar_option {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 87%;
+  height: 40px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.profile_bar_option:hover {
+  background-color: rgb(55, 56, 56);
+}
+.profile_bar_option.active {
+  background-color: rgb(77, 107, 119);
+}

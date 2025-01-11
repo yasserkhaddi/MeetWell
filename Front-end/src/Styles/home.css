@@ -1,4 +1,3 @@
-/* Home container style */
 .home_container {
   display: flex;
   transition: margin-left 0.3s ease;
@@ -16,15 +15,49 @@
 }
 
 .table {
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
+  margin: 25px 0 25px 70px;
+  font-size: 0.9em;
+  min-width: 400px;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-
+.table thead tr {
+  background-color: rgb(49, 51, 58);
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
 .table th,
 .table td {
-  padding: 10px;
-  text-align: left;
-  border: 1px solid #ddd;
+  padding: 12px 15px;
+}
+/* .table td.description {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */
+
+.table tbody tr {
+  border-bottom: 1px solid rgb(221, 221, 221);
+  font-size: 15px;
+  font-weight: 400;
+}
+.table tbody tr:nth-of-type(even) {
+  background-color: rgb(243, 243, 243);
+}
+.table tbody tr:last-of-type {
+  border-bottom: 2px solid rgb(49, 51, 58);
+}
+.header_top {
+  display: flex;
+  justify-content: space-between;
+}
+.header_top_right {
+  margin-right: 9px;
 }
 .header_logo {
   width: 60px;
@@ -48,4 +81,16 @@
 .second_line {
   margin-bottom: 20px;
   margin-top: 12px;
+}
+.delete_button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.appoint_false {
+  text-align: center;
+}
+
+.td_disabled {
+  background-color: rgb(78, 76, 76);
 }

@@ -1,0 +1,140 @@
+.infoperso_container {
+  width: 100%;
+  padding-top: 10px;
+  background-color: rgba(76, 80, 85, 0.1);
+  box-shadow: -5px 5px 8px gray;
+  border-radius: 8px;
+}
+.infoperso_content {
+  /* border: 1px solid; */
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+.formulaire {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  margin-left: 15px;
+}
+
+.formul_total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.formulaire_one {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.formulaire_two {
+  margin-right: 12px;
+}
+.formulaire_input_edit {
+  background-color: rgb(76, 80, 85);
+  width: 65%;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  margin: 12px 0 12px 12px;
+  outline: none;
+  color: white;
+  padding-left: 15px;
+}
+.formulaire_label_edit {
+  font-weight: 400;
+}
+
+.formulaire_button_edit {
+  width: 40%;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  /* background-color: rgb(78, 104, 126); */
+  background-color: rgb(78, 109, 139);
+  margin-top: 12px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  margin-left: 68px;
+  color: white;
+  font-size: 15px;
+}
+.title_span_edit {
+  font-size: 24px;
+  font-weight: 500;
+}
+.title_header {
+  text-align: center;
+  margin-top: 12px;
+}
+.phone_title {
+  display: block;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.phone_label {
+  display: block;
+  font-weight: 400;
+  margin-left: 15px;
+}
+.input_edit_phone {
+  background-color: rgb(76, 80, 85);
+  width: 64%;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  margin: 12px 0 12px 27px;
+  outline: none;
+  color: white;
+  padding-left: 15px;
+}
+.split_phone {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.second_div_phone {
+  margin-right: 12px;
+}
+.first_div_phone {
+  width: 100%;
+}
+.edit_phone_button {
+  width: 40%;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  /* background-color: rgb(78, 104, 126); */
+  background-color: rgb(78, 109, 139);
+  margin-top: 12px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  margin-left: 68px;
+  color: white;
+  font-size: 15px;
+}
+.formulaire_input_edit::-webkit-calendar-picker-indicator {
+  position: relative;
+  left: -10px;
+  background-color: rgb(121, 136, 151);
+  border-radius: 8px;
+  font-size: 15px;
+}
+.formulaire_input_edit:disabled,
+.input_edit_phone:disabled {
+  background-color: gray;
+  color: white;
+  cursor: not-allowed;
+}
+.formulaire_two svg,
+.second_div_phone svg {
+  background-color: rgb(76, 80, 85);
+  border-radius: 8px;
+  padding: 5px;
+  cursor: not-allowed;
+}

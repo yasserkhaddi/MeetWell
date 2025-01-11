@@ -1,6 +1,7 @@
 const { users } = require("../../../config/db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { ObjectId } = require("mongodb");
 
 class UserModel {
   //registration
@@ -29,7 +30,7 @@ class UserModel {
       }
     } catch (err) {
       console.error(err);
-      throw new Error("Internal server error");
+      return { status: 400, success: false, message: err.message };
     }
   }
 
@@ -69,7 +70,81 @@ class UserModel {
       }
     } catch (err) {
       console.error(err);
-      throw new Error("Internal server error");
+      return { status: 400, success: false, message: err.message };
+    }
+  }
+  //edit user
+  async edit(userId, userInfo) {
+    const { email, nom, prenom, dateDeNaissance } = userInfo;
+    try {
+      const user = await users.findOne({ _id: new ObjectId(userId) });
+      if (!user) {
+        return { status: 400, message: "Utilisateur non trouvé" };
+      } else {
+        const updateUser = {};
+
+        if (nom) updateUser.nom = nom;
+        if (prenom) updateUser.prenom = prenom;
+        if (email) updateUser.email = email;
+        if (dateDeNaissance) updateUser.dateDeNaissance = dateDeNaissance;
+        await users.updateOne(
+          { _id: new ObjectId(userId) },
+          { $set: updateUser }
+        );
+        return { status: 200, message: "Modification validée" };
+      }
+    } catch (err) {
+      console.error(err);
+      return { status: 500, message: "Internal server error" };
+    }
+  }
+  //verify password
+
+  async verifyPassword(userInfo) {
+    try {
+      const user = await users.findOne({ _id: new ObjectId(userInfo._id) });
+      if (!user) {
+        return { status: 404, message: "User not found", valid: false };
+      }
+
+      const result = await bcrypt.compare(userInfo.password, user.password);
+
+      if (!result) {
+        return {
+          status: 401,
+          message: "Mot de passe ne correspond pas",
+          valid: false,
+        };
+      } else {
+        return {
+          status: 200,
+          message: "Le mot de passe correspond",
+          valid: true,
+        };
+      }
+    } catch (err) {
+      console.error(err);
+      return { status: 500, message: "Internal server error", valid: false };
+    }
+  }
+  //    Adding phone number
+  async addPhoneNubmer(userId, userPhone) {
+    try {
+      const findUser = await users.findOne({ _id: new ObjectId(userId) });
+      if (!findUser) {
+        return { status: 401, message: "Utilisateur ne correspond pas" };
+      } else {
+        await users.updateOne(
+          { _id: new ObjectId(userId) },
+          { $set: userPhone }
+        );
+        return {
+          status: 200,
+          message: "Phone number added successfully",
+        };
+      }
+    } catch (err) {
+      console.error(err);
     }
   }
 }

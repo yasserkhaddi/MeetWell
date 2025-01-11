@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signUp, logIn } from "./actions";
+import {
+  signUp,
+  logIn,
+  editUser,
+  addPhoneNumber,
+  verifyPassword,
+} from "./actions";
 
 const initialState = {
   user: null,
@@ -40,7 +46,51 @@ const userslice = createSlice({
       })
       .addCase(logIn.rejected, (state, action) => {
         state.error = action.error.message;
+        console.log(state.error);
+
         state.loading = false;
+      })
+      //.....................edit................................
+      .addCase(editUser.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(editUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = false;
+      })
+      .addCase(editUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //.....................add phone number................................
+      .addCase(addPhoneNumber.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(addPhoneNumber.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = false;
+      })
+      .addCase(addPhoneNumber.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //.....................verify password................................
+      .addCase(verifyPassword.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(verifyPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = false;
+      })
+      .addCase(verifyPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });

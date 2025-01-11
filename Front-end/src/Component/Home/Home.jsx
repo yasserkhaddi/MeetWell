@@ -3,10 +3,16 @@ import { useNavigate } from "react-router-dom";
 import "../../Styles/home.css";
 import cookie from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAppoint } from "../../Redux/Appointments/actions";
+import {
+  fetchAppoint,
+  deleteAppoint,
+  expiredAppointment,
+} from "../../Redux/Appointments/actions";
 import logo from "../../tools/logo/logo.png";
 import SideBar from "../SideBar/sideBar";
 import AddAppoint from "./AddAppoint";
+import { Trash2 } from "lucide-react";
+import Clock from "../Clock_test/Clock";
 
 export default function Home() {
   const existingUser = !!cookie.get("access_token");
@@ -14,19 +20,19 @@ export default function Home() {
   let userInfo;
 
   try {
-    // Safely parse the cookies
     userInfo = userCookies ? JSON.parse(userCookies) : null;
   } catch (e) {
     console.error("Error parsing user cookies:", e);
-    userInfo = null; // Fallback if parsing fails
+    userInfo = null;
   }
 
   const nav = useNavigate();
   const dispatch = useDispatch();
 
-  const { appointment, error, loading } = useSelector(
+  const { appointment, expiredAppointments, error, loading } = useSelector(
     (state) => state.appointment
   );
+
 
   if (!existingUser) {
     nav("/");
@@ -43,11 +49,39 @@ export default function Home() {
   useEffect(() => {
     if (existingUser && userInfo) {
       const userId = userInfo._id;
+
       dispatch(fetchAppoint(userId));
     } else {
       nav("/");
     }
-  }, [existingUser, dispatch, nav, userInfo]);
+  }, [dispatch, appointment]); 
+
+  const sortedAppointments =
+    appointment && appointment.length > 0
+      ? [...appointment].sort((a, b) => {
+          const dateA = new Date(a.date + " " + a.time);
+          const dateB = new Date(b.date + " " + b.time);
+          return dateA - dateB;
+        })
+      : [];
+
+  const handleExpiredAppointments = async () => {
+    const result = await dispatch(expiredAppointment());
+    console.log("Action result:", result);
+  };
+
+  useEffect(() => {
+    handleExpiredAppointments();
+  }, []);
+
+  const handleDeleteAppoint = (id) => {
+    console.log("Deleting appointment with ID:", id);
+    try {
+      dispatch(deleteAppoint(id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <>
@@ -55,13 +89,20 @@ export default function Home() {
         <SideBar />
         <div className="content">
           <div className="header">
-            <img src={logo} alt="Logo" className="header_logo" />
-            <div className="welcome">
-              {userInfo && (
-                <span className="welcome_text">
-                  Bonjour {userInfo.nom} {userInfo.prenom}
-                </span>
-              )}
+            <div className="header_top">
+              <div className="header_top_left">
+                <img src={logo} alt="Logo" className="header_logo" />
+                <div className="welcome">
+                  {userInfo && (
+                    <span className="welcome_text">
+                      Bonjour {userInfo.nom} {userInfo.prenom}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="header_top_right">
+                <Clock />
+              </div>
             </div>
             <hr className="first_line" />
             <div className="header_info">
@@ -70,7 +111,7 @@ export default function Home() {
                   Ajouter un nouveau rendez-vous
                 </span>
               </div>
-              <AddAppoint />
+              <AddAppoint userInfo={userInfo} />
             </div>
           </div>
           <hr className="second_line" />
@@ -79,26 +120,40 @@ export default function Home() {
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Le jour</th>
-                  <th>Le temps</th>
+                  <th>Jour</th>
+                  <th>Temps</th>
                   <th>Nr de téléphone</th>
-                  <th>Enregistrer en</th>
+                  {/* <th>Description</th> */}
+                  <th>Enregistré en</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {appointment ? (
-                  appointment.map((e) => (
+                {sortedAppointments.length > 0 ? (
+                  sortedAppointments.map((e) => (
                     <tr key={e._id}>
                       <td>{e._id}</td>
-                      <td>{e.day}</td>
+                      <td>{e.date}</td>
                       <td>{e.time}</td>
                       <td>{e.phoneNumber}</td>
+                      {/* <td className="description">{e.description}</td> */}
                       <td>{e.timeSaved}</td>
+                      <td>
+                        <button
+                          onClick={() => handleDeleteAppoint(e._id)}
+                          className="delete_button"
+                        >
+                          <Trash2 />
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="5">vous n'avez aucun rendez-vous</td>
+                    <td colSpan="5" className="appoint_false">
+                      Vous n'avez aucun rendez-vous
+                    </td>
+                    <td className="td_disabled"></td>
                   </tr>
                 )}
               </tbody>
