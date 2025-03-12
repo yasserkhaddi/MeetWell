@@ -1,0 +1,38 @@
+.delete_content {
+  margin-top: 50px;
+  border-radius: 8px;
+  padding: 30px;
+  background-color: rgba(76, 80, 85, 0.1);
+  box-shadow: -5px 5px 8px gray;
+}
+
+.delete_content h2 {
+  text-align: center;
+}
+
+.delete_buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+}
+
+.delete_button_delete,
+.cancel_button {
+  width: 30%;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+}
+
+.delete_button_delete {
+  background-color: rgb(218, 83, 83);
+  cursor: pointer;
+  box-shadow: -5px 5px 8px gray;
+}
+
+.cancel_button {
+  background-color: rgb(80, 172, 80);
+  cursor: pointer;
+  box-shadow: -5px 5px 8px gray;
+}

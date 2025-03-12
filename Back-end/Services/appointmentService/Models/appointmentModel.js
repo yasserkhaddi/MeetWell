@@ -1,14 +1,10 @@
-const {
-  appoint,
-  expiredAppoint,
-  deletedAppoint,
-} = require("../../../config/db");
+const { appoint, expiredAppoint, deletedAppoint } = require("../config/db");
 const { ObjectId } = require("mongodb");
+
 class AppointmentModel {
   // Add appointment
   async addAppoint(appointInfo) {
-    const { userId, phoneNumber, date, time, description, timeSaved } =
-      appointInfo;
+    const { userId, phoneNumber, date, time, description } = appointInfo;
     try {
       const existingAppointment = await appoint.findOne({
         date: date,

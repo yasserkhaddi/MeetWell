@@ -6,7 +6,6 @@
   border-radius: 8px;
 }
 .infoperso_content {
-  /* border: 1px solid; */
   width: 100%;
   padding-bottom: 8px;
 }
@@ -51,7 +50,6 @@
   height: 40px;
   border: none;
   border-radius: 8px;
-  /* background-color: rgb(78, 104, 126); */
   background-color: rgb(78, 109, 139);
   margin-top: 12px;
   margin-bottom: 20px;

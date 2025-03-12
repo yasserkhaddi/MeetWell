@@ -1,0 +1,153 @@
+.admin_info_perso_container {
+  display: flex;
+  justify-content: center;
+}
+
+.admin_info_perso_content {
+  margin-top: 100px;
+  margin-bottom: 30px;
+  width: 80%;
+  padding-top: 10px;
+  background-color: rgba(76, 80, 85, 0.1);
+  box-shadow: -5px 5px 8px gray;
+  border-radius: 8px;
+}
+.admin_info_perso_formulaire {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  margin-left: 15px;
+}
+
+.admin_info_perso_formul_total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin_info_perso_formulaire_one {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.admin_info_perso_formulaire_two {
+  margin-right: 12px;
+}
+
+.admin_info_perso_formulaire_input_edit {
+  background-color: rgb(76, 80, 85);
+  width: 65%;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  margin: 12px 0 12px 12px;
+  outline: none;
+  color: white;
+  padding-left: 15px;
+}
+
+.admin_info_perso_formulaire_label_edit {
+  font-weight: 400;
+}
+
+.admin_info_perso_formulaire_button_edit {
+  width: 40%;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgb(78, 109, 139);
+  margin-top: 12px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  margin-left: 68px;
+  color: white;
+  font-size: 15px;
+}
+
+.admin_info_perso_title_span {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.admin_info_perso {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.admin_info_perso_phone_title {
+  display: block;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.admin_info_perso_phone_label {
+  display: block;
+  font-weight: 400;
+  margin-left: 15px;
+}
+.admin_info_perso_input_edit_phone {
+  background-color: rgb(76, 80, 85);
+  width: 64%;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  margin: 12px 0 12px 27px;
+  outline: none;
+  color: white;
+  padding-left: 15px;
+}
+
+.admin_info_perso_split_phone {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin_info_perso_second_div_phone {
+  margin-right: 12px;
+}
+.admin_info_perso_first_div_phone {
+  width: 100%;
+}
+
+.admin_info_perso_edit_phone_button {
+  width: 40%;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgb(78, 109, 139);
+  margin-top: 12px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  margin-left: 68px;
+  color: white;
+  font-size: 15px;
+}
+
+.admin_info_perso_formulaire_input_edit::-webkit-calendar-picker-indicator {
+  position: relative;
+  left: -10px;
+  background-color: rgb(121, 136, 151);
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.admin_info_perso_formulaire_input_edit:disabled,
+.admin_info_perso_input_edit_phone:disabled {
+  background-color: gray;
+  color: white;
+  cursor: not-allowed;
+}
+
+.admin_info_perso_formulaire_two svg,
+.admin_info_perso_second_div_phone svg {
+  background-color: rgb(76, 80, 85);
+  border-radius: 8px;
+  padding: 5px;
+  cursor: not-allowed;
+}

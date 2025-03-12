@@ -1,0 +1,16 @@
+.expired_appointments_content {
+  margin-top: 100px;
+}
+
+.expired_appointments_title h2 {
+  text-align: center;
+  font-weight: 400;
+}
+
+.expired_appointments_title_button {
+  border-radius: 8px;
+  border: none;
+  margin-left: 30px;
+  background-color: rgb(127, 133, 131);
+  cursor: pointer;
+}

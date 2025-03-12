@@ -1,5 +1,9 @@
 const userModel = require("../Models/userModel");
 const user = new userModel();
+require("dotenv").config();
+
+const USER_COOKIE_ONE = process.env.USER_COOKIE_ONE;
+const USER_COOKIE_TWO = process.env.USER_COOKIE_TWO;
 
 class userController {
   //registration
@@ -15,29 +19,39 @@ class userController {
   //login
   async logIn(req, res) {
     try {
-      await user.logIn(req.body).then((r) => {
-        if (r.valid) {
-          res.cookie("access_token", r.token, {
-            sameSite: "Lax",
-            secure: false,
-            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-            domain: "localhost",
-            path: "/",
-          });
-          res.cookie("client_info", JSON.stringify(r.user), {
-            sameSite: "Lax",
-            secure: false,
-            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-            path: "/",
-          });
-        }
-        res.status(r.status).json(r.message);
-      });
+      const result = await user.logIn(req.body);
+
+      if (result.valid) {
+        // Set the cookies
+        res.cookie(USER_COOKIE_ONE, result.token, {
+          sameSite: "Lax",
+          secure: false,
+          expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+          path: "/",
+        });
+        res.cookie(USER_COOKIE_TWO, JSON.stringify(result.user), {
+          sameSite: "Lax",
+          secure: false,
+          expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+          path: "/",
+        });
+
+        return res.status(result.status).json({
+          message: result.message,
+          user: {
+            ...result.user,
+            isAdmin: result.user.isAdmin,
+          },
+        });
+      } else {
+        return res.status(result.status).json({ message: result.message });
+      }
     } catch (err) {
       console.error(err);
-      res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ message: "Internal server error" });
     }
   }
+
   //edit user
   edit(req, res) {
     try {
@@ -62,9 +76,10 @@ class userController {
   //verifyPass
   verifyPassword(req, res) {
     try {
-      if (req.user.id === req.body.id) {
+      const { id, password } = req.body;
+      if (req.user.id === id) {
         user
-          .verifyPassword(req.user.id)
+          .verifyPassword({ _id: id, password })
           .then((r) => {
             res.status(r.status).json({ message: r.message, valid: r.valid });
           })
@@ -95,6 +110,44 @@ class userController {
           });
       } else {
         res.status(403).json({ message: "Forbidden access (Controller)" });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  // change password
+  changePassword(req, res) {
+    try {
+      if (req.user.id === req.params.id) {
+        user
+          .changePassword(req.user.id, req.body.password)
+          .then((r) => {
+            res.status(r.status).json(r.message);
+          })
+          .catch((err) => {
+            console.error(err);
+            res.status(500).json({ message: "Internal server error" });
+          });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  //delete account
+  deleteAccount(req, res) {
+    try {
+      if (req.user.id === req.params.id) {
+        user
+          .deleteAccount(req.user.id)
+          .then((r) => {
+            res.status(r.status).json(r.message);
+          })
+          .catch((err) => {
+            console.error(err);
+            res.status(500).json({ message: "Internal server error" });
+          });
       }
     } catch (err) {
       console.error(err);

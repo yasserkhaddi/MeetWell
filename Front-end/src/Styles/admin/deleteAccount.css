@@ -1,0 +1,46 @@
+.admin_delete_container {
+  margin-top: 100px;
+}
+.admin_delete_content {
+  margin-top: 50px;
+  border-radius: 8px;
+  padding: 30px;
+  background-color: rgba(76, 80, 85, 0.1);
+  box-shadow: -5px 5px 8px gray;
+  width: 80%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+}
+
+.admin_delete_content h2 {
+  text-align: center;
+}
+
+.admin_delete_buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+}
+
+.admin_delete_button_delete,
+.admin_cancel_button {
+  width: 30%;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+}
+
+.admin_delete_button_delete {
+  background-color: rgb(218, 83, 83);
+  cursor: pointer;
+  box-shadow: -5px 5px 8px gray;
+}
+
+.admin_cancel_button {
+  background-color: rgb(80, 172, 80);
+  cursor: pointer;
+  box-shadow: -5px 5px 8px gray;
+}

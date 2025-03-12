@@ -47,9 +47,6 @@ export const addPhoneNumber = createAsyncThunk(
 export const verifyPassword = createAsyncThunk(
   "User/verifyPassword",
   async ({ id, password }) => {
-    console.log(id);
-    console.log(password);
-
     const result = await axios.post(
       "http://localhost:5050/user/verifyPass",
       {
@@ -58,7 +55,29 @@ export const verifyPassword = createAsyncThunk(
       },
       { withCredentials: true }
     );
-    console.log(result);
+    return result.data;
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "User/changePassword",
+  async ({ id, password }) => {
+    const result = await axios.put(
+      `http://localhost:5050/user/editPassword/${id}`,
+      { password },
+      { withCredentials: true }
+    );
+    return result.data;
+  }
+);
+
+export const deleteAccount = createAsyncThunk(
+  "User/deleteAccount",
+  async (id) => {
+    const result = await axios.delete(
+      `http://localhost:5050/user/deleteAccount/${id}`,
+      { withCredentials: true }
+    );
     return result.data;
   }
 );

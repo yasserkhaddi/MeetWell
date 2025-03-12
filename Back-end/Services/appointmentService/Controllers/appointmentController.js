@@ -1,4 +1,4 @@
-const app = require("../../../config/server");
+// const app = require("../config/server");
 const AppointmentModel = require("../Models/appointmentModel");
 const appoint = new AppointmentModel();
 
@@ -95,7 +95,6 @@ class AppointmentController {
       });
     }
   }
-  
 }
 
 module.exports = AppointmentController;

@@ -1,7 +1,11 @@
-const { users } = require("../../../config/db");
+const { users } = require("../config/db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { ObjectId } = require("mongodb");
+const moment = require("moment");
+require("dotenv").config();
+
+const SECRET_CODE = process.env.SECRET_CODE;
 
 class UserModel {
   //registration
@@ -23,6 +27,11 @@ class UserModel {
           prenom,
           dateDeNaissance,
           password: hashedPassword,
+          isVerified: false,
+          isAdmin: false,
+          isUser: true,
+          isSpammed: false,
+          created_at: moment().format("YYYY-MM-DD / HH:mm:ss"),
         };
         //create new user
         await users.insertOne(newUser);
@@ -38,15 +47,16 @@ class UserModel {
   async logIn(userInfo) {
     const { email, password } = userInfo;
     try {
-      //find email
+      // Find user by email
       const existingUser = await users.findOne({ email: email });
       if (!existingUser) {
         return {
           status: 401,
-          message: "Utilisateur n'exist pas",
+          message: "Utilisateur n'existe pas",
           valid: false,
         };
       } else {
+        // Validate password
         const validPassword = await bcrypt.compare(
           password,
           existingUser.password
@@ -58,12 +68,17 @@ class UserModel {
             valid: false,
           };
         } else {
-          const token = jwt.sign({ id: existingUser._id }, "yasserkhaddi2003");
+          // Create JWT token
+          const token = jwt.sign({ id: existingUser._id }, SECRET_CODE);
+
           return {
             status: 201,
-            message: "se connecter avec succès",
+            message: "Se connecter avec succès",
             token,
-            user: existingUser,
+            user: {
+              ...existingUser,
+              isAdmin: existingUser.isAdmin,
+            },
             valid: true,
           };
         }
@@ -73,6 +88,7 @@ class UserModel {
       return { status: 400, success: false, message: err.message };
     }
   }
+
   //edit user
   async edit(userId, userInfo) {
     const { email, nom, prenom, dateDeNaissance } = userInfo;
@@ -145,6 +161,48 @@ class UserModel {
       }
     } catch (err) {
       console.error(err);
+      return { status: 500, message: "Internal server error", valid: false };
+    }
+  }
+  // change password
+  async changePassword(userId, password) {
+    try {
+      const findUser = await users.findOne({ _id: new ObjectId(userId) });
+      if (!findUser) {
+        return { status: 401, message: "Utilisateur ne correspond pas" };
+      } else {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await users.updateOne(
+          { _id: new ObjectId(userId) },
+          { $set: { password: hashedPassword } }
+        );
+        return {
+          status: 200,
+          message: "Password updates successfully",
+        };
+      }
+    } catch (err) {
+      console.error(err);
+      return { status: 500, message: "Internal server error", valid: false };
+    }
+  }
+  // delete account
+  async deleteAccount(userId) {
+    try {
+      const user = await users.findOne({ _id: new ObjectId(userId) });
+
+      if (!user) {
+        return { status: 401, message: "Utilisateur ne correspond pas" };
+      } else {
+        await users.deleteOne({ _id: new ObjectId(userId) });
+        return {
+          status: 200,
+          message: "account deleted successfully",
+        };
+      }
+    } catch (err) {
+      console.error(err);
+      return { status: 500, message: "Internal server error", valid: false };
     }
   }
 }

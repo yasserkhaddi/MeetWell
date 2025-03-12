@@ -5,6 +5,8 @@ import {
   editUser,
   addPhoneNumber,
   verifyPassword,
+  changePassword,
+  deleteAccount,
 } from "./actions";
 
 const initialState = {
@@ -89,6 +91,34 @@ const userslice = createSlice({
         state.error = false;
       })
       .addCase(verifyPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //.....................change password................................
+      .addCase(changePassword.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(changePassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = false;
+      })
+      .addCase(changePassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //.....................Delete account................................
+      .addCase(deleteAccount.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(deleteAccount.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = false;
+      })
+      .addCase(deleteAccount.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

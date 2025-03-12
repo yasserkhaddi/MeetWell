@@ -1,0 +1,74 @@
+.admin_add_appoint_content {
+  margin-top: 80px;
+}
+
+.admin_add_appoint_title h2 {
+  text-align: center;
+  font-weight: 400;
+  margin: 0;
+}
+
+.admin_add_appoint_form {
+  display: flex;
+  background-color: rgb(49, 51, 58);
+  color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -33%);
+  width: 80%;
+  border: none;
+  border-radius: 8px;
+  height: 450px;
+  box-shadow: -5px 5px 8px gray;
+}
+.admin_add_appoint_form_left {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.admin_add_appoint_div {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-left: 10px;
+}
+
+.admin_add_appoint_div input,
+textarea,
+select {
+  width: 90%;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  padding-left: 12px;
+}
+
+.admin_add_appoint_div select {
+  width: 90%;
+  height: 31px;
+}
+
+.admin_add_appoint_div input,
+select:focus {
+  outline: none;
+}
+
+.admin_add_appoint_form_right {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin_add_appoint_form_right_button {
+  width: 70%;
+  height: 45px;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+}

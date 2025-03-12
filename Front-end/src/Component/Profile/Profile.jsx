@@ -6,8 +6,9 @@ import cookie from "js-cookie";
 import InfoPerso from "./SwitchComponent/InfoPerso";
 import Password from "./SwitchComponent/passwordUpdate";
 import logo from "../../tools/logo/logo.png";
-import Clock from "../Clock_test/Clock";
+import Clock from "../Clock/Clock";
 import { useNavigate } from "react-router-dom";
+import DeleteAccount from "./SwitchComponent/DeleteAccount";
 
 export default function Profile() {
   const nav = useNavigate();
@@ -49,6 +50,8 @@ export default function Profile() {
         return <InfoPerso />;
       case 2:
         return <Password />;
+      case 3:
+        return <DeleteAccount />;
       default:
         return <InfoPerso />;
     }

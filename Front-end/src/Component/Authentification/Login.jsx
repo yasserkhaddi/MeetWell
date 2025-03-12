@@ -64,7 +64,13 @@ export default function Login() {
             theme: "dark",
             transition: Slide,
           });
-          nav("/home");
+
+          console.log(result);
+          if (result.payload?.user.isAdmin) {
+            nav("/admin/home");
+          } else {
+            nav("/home");
+          }
         }
       });
     } catch (err) {

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "../../../Styles/password.css";
 import cookie from "js-cookie";
 import { toast, Slide } from "react-toastify";
-import { verifyPassword } from "../../../Redux/Users/actions";
+import { verifyPassword, changePassword } from "../../../Redux/Users/actions";
 import { useNavigate } from "react-router-dom";
 
 export default function Password() {
@@ -15,7 +15,6 @@ export default function Password() {
   const [errors, setErrors] = useState("");
   const dispatch = useDispatch();
   const nav = useNavigate();
-  const { loading, error, user } = useSelector((state) => state.users);
 
   const existingUser = !!cookie.get("access_token");
   const userCookies = cookie.get("client_info");
@@ -31,7 +30,6 @@ export default function Password() {
     console.error("Error parsing user cookies:", err);
     userInfo = null;
   }
-  // console.log(userInfo._id);
 
   useEffect(() => {
     if (existingUser && userInfo) {
@@ -54,25 +52,100 @@ export default function Password() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (errors != "") {
-      toast.error("Veuillez saisir le même mot de passe.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Slide,
-      });
-    } else {
-      console.log(formData.oldPassword);
-      dispatch(
-        verifyPassword({ id: userInfo._id, Password: formData.oldPassword })
-      ).then((r) => {
-        console.log(r);
-      });
+    try {
+      if (
+        formData.newPassword == "" ||
+        formData.oldPassword == "" ||
+        confirmPass == ""
+      ) {
+        toast.error("Remplissez tous les champs!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
+      } else {
+        if (errors != "") {
+          toast.error("Veuillez saisir le même mot de passe.", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Slide,
+          });
+        } else {
+          dispatch(
+            verifyPassword({ id: userInfo._id, password: formData.oldPassword })
+          ).then((r) => {
+            console.log(r);
+            if (r.type === "User/verifyPassword/fulfilled") {
+              try {
+                if (formData.oldPassword === confirmPass) {
+                  toast.error("veuillez choisissez un autre mot de passe", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Slide,
+                  });
+                } else {
+                  dispatch(
+                    changePassword({ id: userInfo._id, password: confirmPass })
+                  ).then((r) => {
+                    if (r.type === "User/changePassword/fulfilled") {
+                      toast.success(
+                        "Votre mot de passe a été changé avec succès.",
+                        {
+                          position: "top-right",
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "dark",
+                          transition: Slide,
+                        }
+                      );
+                    }
+                  });
+                  setFormData({ oldPassword: "", newPassword: "" });
+                  setConfirmPass("");
+                }
+              } catch (err) {
+                console.error(err);
+              }
+            } else {
+              toast.error("L'ancien mot de passe est incorrect", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Slide,
+              });
+            }
+          });
+        }
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -108,7 +181,11 @@ export default function Password() {
           />
           {errors && <div style={{ color: "red" }}> {errors} </div>}
           <div className="button_for_confirm_pass_change">
-            <button className="pass_change_confirm" onClick={handleSubmit}>
+            <button
+              className="pass_change_confirm"
+              onClick={handleSubmit}
+              type="submit"
+            >
               {" "}
               Confirmer{" "}
             </button>

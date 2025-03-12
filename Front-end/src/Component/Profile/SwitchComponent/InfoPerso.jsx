@@ -85,6 +85,7 @@ export default function InfoPerso() {
         prenom: currentUser.prenom,
         email: currentUser.email,
         dateDeNaissance: currentUser.dateDeNaissance,
+        isAdmin: currentUser.isAdmin,
         PhoneNumber: PhoneNumber,
       };
       dispatch(editUser({ id: userInfo._id, formData: formData })).then(
@@ -176,7 +177,13 @@ export default function InfoPerso() {
                       :
                     </label>
                     <input
-                      type={field === "email" ? "email" : "text"}
+                      type={
+                        field === "dateDeNaissance"
+                          ? "date"
+                          : field === "email"
+                          ? "email"
+                          : "text"
+                      }
                       value={currentUser[field]}
                       name={field}
                       onChange={handleChange}
@@ -215,7 +222,7 @@ export default function InfoPerso() {
                 <div className="first_div_phone">
                   <label className="phone_label">Numéro De Téléphone:</label>
                   <input
-                    type="number"
+                    type="tel"
                     value={PhoneNumber}
                     onChange={(e) => {
                       setPhoneNumber(e.target.value);
@@ -223,6 +230,9 @@ export default function InfoPerso() {
                     name="phoneNumber"
                     className="input_edit_phone"
                     min={0}
+                    pattern="^0[1-9]([.-]?[0-9]{2}){4}$"
+                    maxLength={13}
+                    title="Le numéro de téléphone doit être valide, par exemple : 06 12 34 56 78"
                     disabled={isFieldDisabled.PhoneNumber}
                   />
                 </div>

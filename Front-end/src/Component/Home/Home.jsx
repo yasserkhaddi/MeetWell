@@ -12,7 +12,7 @@ import logo from "../../tools/logo/logo.png";
 import SideBar from "../SideBar/sideBar";
 import AddAppoint from "./AddAppoint";
 import { Trash2 } from "lucide-react";
-import Clock from "../Clock_test/Clock";
+import Clock from "../Clock/Clock";
 
 export default function Home() {
   const existingUser = !!cookie.get("access_token");
@@ -32,7 +32,6 @@ export default function Home() {
   const { appointment, expiredAppointments, error, loading } = useSelector(
     (state) => state.appointment
   );
-
 
   if (!existingUser) {
     nav("/");
@@ -54,8 +53,7 @@ export default function Home() {
     } else {
       nav("/");
     }
-  }, [dispatch, appointment]); 
-
+  }, [dispatch, appointment]);
   const sortedAppointments =
     appointment && appointment.length > 0
       ? [...appointment].sort((a, b) => {
@@ -64,6 +62,7 @@ export default function Home() {
           return dateA - dateB;
         })
       : [];
+  console.log(userInfo);
 
   const handleExpiredAppointments = async () => {
     const result = await dispatch(expiredAppointment());
@@ -120,8 +119,8 @@ export default function Home() {
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Jour</th>
-                  <th>Temps</th>
+                  <th>Date</th>
+                  <th>Créneau réservé</th>
                   <th>Nr de téléphone</th>
                   {/* <th>Description</th> */}
                   <th>Enregistré en</th>

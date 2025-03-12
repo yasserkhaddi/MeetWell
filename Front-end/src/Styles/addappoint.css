@@ -120,3 +120,9 @@ option:focus {
   background-color: rgb(49, 51, 58);
   color: white;
 }
+.add_new_day_off {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-right: 50px;
+}

@@ -85,3 +85,24 @@
   border-radius: 12px;
   border: none;
 }
+
+.container_two {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+  background-color: rgb(49, 51, 58);
+  width: 60%;
+  height: 550px;
+  border-radius: 8px;
+  display: flex;
+}
+
+.container_two h2 {
+  text-align: center;
+  color: white;
+}
+
+.to_update {
+  margin-top: 100px;
+}

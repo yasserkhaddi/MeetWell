@@ -5,6 +5,7 @@ export default function ProfileBar({ selectedOption, onOptionClick }) {
   const options = [
     { text: "Information personnelle", case: 1 },
     { text: "Changer le mot de passe", case: 2 },
+    { text: "Supprimez votre compte", case: 3 },
   ];
 
   return (
