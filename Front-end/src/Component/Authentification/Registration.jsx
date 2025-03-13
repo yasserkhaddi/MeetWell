@@ -12,6 +12,7 @@ export default function Registration() {
   useEffect(() => {
     document.title = "S'inscrire";
   }, []);
+
   const [formData, setFormData] = useState({
     nom: "",
     prenom: "",
@@ -19,22 +20,29 @@ export default function Registration() {
     email: "",
     password: "",
   });
+
+  const [errorTriggered, setErrorTriggered] = useState(false);
   const nav = useNavigate();
   const dsp = useDispatch();
   const { user, loading, error } = useSelector((state) => state.users);
 
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    if (error && !errorTriggered) {
+      setErrorTriggered(false);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (
-      formData.dateDeNaissance == "" ||
-      formData.email == "" ||
-      formData.nom == "" ||
-      formData.password == "" ||
-      formData.prenom == ""
+      formData.dateDeNaissance === "" ||
+      formData.email === "" ||
+      formData.nom === "" ||
+      formData.password === "" ||
+      formData.prenom === ""
     ) {
       toast("Remplissez tous les champs!", {
         position: "top-right",
@@ -51,7 +59,7 @@ export default function Registration() {
       try {
         dsp(signUp(formData)).then((result) => {
           if (result.type === "auth/signup/fulfilled") {
-            toast.success("votre compte a été créé avec succès", {
+            toast.success("Votre compte a été créé avec succès", {
               position: "top-right",
               autoClose: 5000,
               hideProgressBar: false,
@@ -70,6 +78,23 @@ export default function Registration() {
       }
     }
   };
+
+  useEffect(() => {
+    if (error && !errorTriggered) {
+      toast.error("E-mail déjà existant", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Slide,
+      });
+      setErrorTriggered(true);
+    }
+  }, [error, errorTriggered]);
 
   return (
     <>
@@ -133,19 +158,6 @@ export default function Registration() {
           <div className="logo">
             <img src={logo} alt="" />
           </div>
-
-          {error &&
-            toast.error("E-mail déjà existant", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-              transition: Slide,
-            })}
         </div>
         {loading && <Loading />}
       </div>

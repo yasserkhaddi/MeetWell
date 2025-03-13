@@ -39,7 +39,7 @@ export default function FetchedAppointment() {
 
   useEffect(() => {
     dispatch(fetchUser()).then((r) => {
-      setUsers(r.payload.users);
+      setUsers(r.payload?.users || []);
     });
 
     dispatch(fetchAppointments()).then((r) => {
