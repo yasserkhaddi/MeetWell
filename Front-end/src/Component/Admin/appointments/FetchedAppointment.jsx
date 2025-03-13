@@ -146,13 +146,16 @@ export default function FetchedAppointment() {
             <tbody>
               {filteredAppointments?.length > 0 ? (
                 filteredAppointments.map((e, i) => {
-                  const user = users.find((user) => user._id === e.userId);
+                  const user = users?.length
+                    ? users.find((user) => user._id === e.userId)
+                    : null;
 
-                  const fullName = user
-                    ? `${user.prenom} ${user.nom}`
-                    : e.prenom && e.nom
-                    ? `${e.prenom} ${e.nom}`
-                    : "Utilisateur inconnu";
+                  const fullName =
+                    user?.prenom && user?.nom
+                      ? `${user.prenom} ${user.nom}`
+                      : e.prenom && e.nom
+                      ? `${e.prenom} ${e.nom}`
+                      : "Utilisateur inconnu";
 
                   return (
                     <tr key={i}>

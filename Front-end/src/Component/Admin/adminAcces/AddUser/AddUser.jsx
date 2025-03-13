@@ -21,11 +21,19 @@ export default function AddUser() {
     email: "",
     password: "",
   });
+
+  const [errorTriggered, setErrorTriggered] = useState(false);
+
   const nav = useNavigate();
   const dsp = useDispatch();
   const { loading, error } = useSelector((state) => state.admin);
+
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    if (error && !errorTriggered) {
+      setErrorTriggered(false);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -71,6 +79,23 @@ export default function AddUser() {
       }
     }
   };
+
+  useEffect(() => {
+    if (error && !errorTriggered) {
+      toast.error("E-mail déjà existant", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Slide,
+      });
+      setErrorTriggered(true);
+    }
+  }, [error, errorTriggered]);
 
   const handleNav = () => {
     nav("/admin/access");
@@ -159,19 +184,6 @@ export default function AddUser() {
           <div className="logo">
             <img src={logo} alt="" />
           </div>
-
-          {error &&
-            toast.error("E-mail déjà existant", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-              transition: Slide,
-            })}
         </div>
       </div>
     </>
