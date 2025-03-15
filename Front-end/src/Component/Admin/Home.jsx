@@ -20,8 +20,7 @@ export default function AdminHome() {
 
   useEffect(() => {
     document.title = "Admin panel";
-    if (existingUser && userInfo) {
-    } else {
+    if (!existingUser && !userInfo) {
       nav("/");
     }
   }, [existingUser, userInfo]);

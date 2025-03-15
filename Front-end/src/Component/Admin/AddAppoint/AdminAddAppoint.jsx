@@ -95,7 +95,6 @@ export default function AdminAddAppoint() {
         });
       } else {
         dispatch(adminAddAppoint(formData)).then((r) => {
-          console.log(r);
           if (r.type === "admin/addAppoint/fulfilled") {
             toast.success("Le rendez-vous a été enregistré avec succès", {
               position: "top-right",

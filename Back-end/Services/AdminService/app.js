@@ -1,5 +1,5 @@
 const router = require("./Routes/adminRoutes");
-const app = require("./config/server");
+const app = require("../../config/server");
 require("dotenv").config();
 
 app.use("/admin", router);

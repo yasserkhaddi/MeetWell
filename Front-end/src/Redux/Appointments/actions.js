@@ -70,8 +70,8 @@ export const expiredAppointment = createAsyncThunk(
       const response = await axios.post(
         "http://localhost:8080/appoint/move_expired_appoint"
       );
-      console.log("API Response:", response.data); // Check this
-      return response.data; // Ensure you're returning the correct response
+
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

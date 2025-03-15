@@ -62,9 +62,6 @@ export default function DaysOff() {
 
   const handlDelete = (date) => {
     dispatch(removeDisabledDate({ date: date })).then((r) => {
-      console.log(date);
-      console.log(r);
-
       if (r.type === "admin/removeDisabledDate/fulfilled") {
         setDaysOff((prevDays) => prevDays.filter((day) => day.date !== date));
         toast.success("Conjés supprimez avec success", {

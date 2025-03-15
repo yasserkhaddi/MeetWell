@@ -20,13 +20,13 @@ export default function UserSearchBar({ setSearchTerm, setSearchOption }) {
 
   const getInputType = () => {
     switch (selectedOption) {
-      case 1: // Nom et Prénom
+      case 1:
         return "text";
-      case 2: // E-mail
+      case 2:
         return "email";
-      case 3: // Date de naissance
+      case 3:
         return "date";
-      case 4: // Téléphone
+      case 4:
         return "tel";
       default:
         return "text";

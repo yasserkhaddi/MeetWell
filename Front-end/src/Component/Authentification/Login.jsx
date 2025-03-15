@@ -65,7 +65,6 @@ export default function Login() {
             transition: Slide,
           });
 
-          console.log(result);
           if (result.payload?.user.isAdmin) {
             nav("/admin/home");
           } else {

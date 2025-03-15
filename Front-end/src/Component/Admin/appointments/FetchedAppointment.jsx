@@ -91,8 +91,6 @@ export default function FetchedAppointment() {
 
   const handlDelete = (id) => {
     dispatch(deleteAppoint(id)).then((r) => {
-      console.log(r);
-
       if (r.type === "admin/deleteAppoint/fulfilled") {
         toast.success("rendez-vous supprimez avec success", {
           position: "top-right",

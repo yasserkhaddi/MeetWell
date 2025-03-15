@@ -73,6 +73,13 @@ export default function AddAppoint({ userInfo }) {
     e.preventDefault();
     if (!formData.phoneNumber || !formData.date || !formData.time) {
       toast.error("Remplissez tous les champs!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
         theme: "dark",
         transition: Slide,
       });
@@ -83,12 +90,29 @@ export default function AddAppoint({ userInfo }) {
     dispatch(addAppoint(dataToSubmit)).then((r) => {
       if (r.type === "appoint/add/fulfilled") {
         toast.success("Votre rendez-vous a été pris avec succès", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
           theme: "dark",
           transition: Slide,
         });
         toggleModel();
       } else if (r.type === "appoint/add/rejected") {
-        toast.error(r.payload, { theme: "dark", transition: Slide });
+        toast.error(r.payload, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
       }
     });
   };

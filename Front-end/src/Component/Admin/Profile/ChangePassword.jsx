@@ -95,7 +95,6 @@ export default function ChangePassword() {
               password: formData.oldPassword,
             })
           ).then((r) => {
-            console.log(r);
             if (r.type === "admin/verifyPassword/fulfilled") {
               try {
                 if (formData.oldPassword === confirmPass) {

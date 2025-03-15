@@ -6,9 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "../../../../Styles/Registration.css";
 import { addUser } from "../../../../Redux/Admin/action";
 import logo from "../../../../tools/logo/logo.png";
-import Loading from "../../../Loading/Loading";
 import NavBar from "../../AdminNavBar/NavBar";
-import { Trash2, SquareChevronLeft, House } from "lucide-react";
+import { SquareChevronLeft, House } from "lucide-react";
 
 export default function AddUser() {
   useEffect(() => {
@@ -26,7 +25,7 @@ export default function AddUser() {
 
   const nav = useNavigate();
   const dsp = useDispatch();
-  const { loading, error } = useSelector((state) => state.admin);
+  const { error } = useSelector((state) => state.admin);
 
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,11 +38,11 @@ export default function AddUser() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-      formData.dateDeNaissance == "" ||
-      formData.email == "" ||
-      formData.nom == "" ||
-      formData.password == "" ||
-      formData.prenom == ""
+      formData.dateDeNaissance === "" ||
+      formData.email === "" ||
+      formData.nom === "" ||
+      formData.password === "" ||
+      formData.prenom === ""
     ) {
       toast("Remplissez tous les champs!", {
         position: "top-right",
@@ -127,7 +126,7 @@ export default function AddUser() {
         </div>
         <div className="container_two">
           <div className="first_half">
-            <h2>INSCRIPTION</h2>
+            <h2>Ajouter un utilisateur</h2>
             <form className="registartion_form" onSubmit={handleSubmit}>
               <label className="reg_label">Nom :</label>
               <input

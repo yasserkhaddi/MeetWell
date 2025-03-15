@@ -9,7 +9,7 @@ import {
   downgradeToUser,
 } from "../../../../Redux/Admin/action";
 import "../../../../Styles/admin/fetchedUser.css";
-import { House, ShieldCheck } from "lucide-react";
+import { SquareChevronLeft, House, ShieldCheck } from "lucide-react";
 import SearchBar from "./searchBar";
 import { toast, Slide } from "react-toastify";
 import { Button } from "antd";
@@ -22,8 +22,7 @@ export default function UpdateToUser() {
   const [searchOption, setSearchOption] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  // Check for user info from cookies
-  const existingUser = !!cookie.get("access_token");
+  // const existingUser = !!cookie.get("access_token");
   const userCookies = cookie.get("client_info");
   let userInfo;
 
@@ -72,29 +71,31 @@ export default function UpdateToUser() {
   }, [searchTerm, searchOption, users]);
 
   const handleNav = () => {
+    nav("/admin/access");
+  };
+
+  const handlenavHome = () => {
     nav("/admin/home");
   };
 
   const handlePopUp = (user) => {
-    setSelectedUser(user); // Set selected user before opening the popup
-    setIsPopupOpen(true); // Open the popup
+    setSelectedUser(user);
+    setIsPopupOpen(true);
   };
 
   const closePopup = () => {
     setIsPopupOpen(false);
-    setSelectedUser(null); // Reset the selected user
+    setSelectedUser(null);
   };
 
   const handleConfirm = (id) => {
     dispatch(upgradToAdmin(id)).then((r) => {
       if (r.type === "admin/upgradeToAdmin/fulfilled") {
-        // Update users state after upgrading to admin
         const updatedUsers = users.map((user) =>
           user._id === id ? { ...user, isAdmin: true } : user
         );
-        setUsers(updatedUsers); // Update the users state
+        setUsers(updatedUsers);
 
-        // Only access selectedUser if it's not null
         if (selectedUser) {
           toast.success(
             `L'utilisateur ${selectedUser.nom} est devenu administrateur !`,
@@ -112,20 +113,18 @@ export default function UpdateToUser() {
           );
         }
       }
-      closePopup(); // Close the popup only after upgrade action is confirmed
+      closePopup();
     });
   };
 
   const handleToUser = (id, user) => {
     dispatch(downgradeToUser(id)).then((r) => {
       if (r.type === "admin/downgradeToUser/fulfilled") {
-        // Update users state after downgrading to user
         const updatedUsers = users.map((user) =>
           user._id === id ? { ...user, isAdmin: false } : user
         );
-        setUsers(updatedUsers); // Immediately update the users state
+        setUsers(updatedUsers);
 
-        // Directly show toast message using the user details
         toast.success(
           `L'administrateur ${user.nom} est redevenu un utilisateur normal !`,
           {
@@ -152,6 +151,12 @@ export default function UpdateToUser() {
           <div className="admin_fetchUser_title">
             <button
               onClick={handleNav}
+              className="admin_fetchUser_title_button"
+            >
+              <SquareChevronLeft size={40} strokeWidth={1} />
+            </button>
+            <button
+              onClick={handlenavHome}
               className="admin_fetchUser_title_button"
             >
               <House size={40} strokeWidth={1} />

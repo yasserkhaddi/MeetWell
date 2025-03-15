@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import NavBar from "../AdminNavBar/NavBar";
 import "../../../Styles/admin/fetchedUserAppointment.css";
 import { Trash2, SquareChevronLeft, House } from "lucide-react";
-import { DescriptionPopup } from "../appointments/FetchedAppointment"; // Import the named export
+import { DescriptionPopup } from "../appointments/FetchedAppointment";
 import { deleteAppoint } from "../../../Redux/Admin/action";
 import { toast, Slide } from "react-toastify";
 
@@ -37,8 +37,6 @@ export default function FetchedUserAppointment() {
 
   const handlDelete = (id) => {
     dispatch(deleteAppoint(id)).then((r) => {
-      console.log(r);
-
       if (r.type === "admin/deleteAppoint/fulfilled") {
         toast.success("rendez-vous supprimez avec success", {
           position: "top-right",
@@ -124,7 +122,7 @@ export default function FetchedUserAppointment() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4" className="appoint_false">
+                  <td colSpan="6" className="appoint_false">
                     L'utilisateur n'a aucun rendez-vous
                   </td>
                   <td className="td_disabled"></td>

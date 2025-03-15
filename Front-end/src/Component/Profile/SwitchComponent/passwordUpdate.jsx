@@ -86,7 +86,6 @@ export default function Password() {
           dispatch(
             verifyPassword({ id: userInfo._id, password: formData.oldPassword })
           ).then((r) => {
-            console.log(r);
             if (r.type === "User/verifyPassword/fulfilled") {
               try {
                 if (formData.oldPassword === confirmPass) {

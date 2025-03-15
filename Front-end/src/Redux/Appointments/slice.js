@@ -83,7 +83,6 @@ const appointmentSlice = createSlice({
         state.error = null;
       })
       .addCase(expiredAppointment.fulfilled, (state, action) => {
-        console.log("Reducer payload:", action.payload);
         state.loading = false;
         state.expiredAppointments = action.payload.expiredAppointments || [];
       })

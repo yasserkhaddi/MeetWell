@@ -5,7 +5,7 @@ const {
   deletedAppointByAdmin,
   deletedAppoint,
   days,
-} = require("../config/db");
+} = require("../../../config/db");
 const { ObjectId } = require("mongodb");
 const bcrypt = require("bcryptjs");
 
@@ -153,7 +153,7 @@ class AdminModel {
 
   async fetchDates() {
     try {
-      const day = await days.find().toArray();
+      const day = await days.find().sort({ date: -1 }).toArray();
       if (day.length === 0) {
         return { status: 404, message: "Aucun conjé trouvé " };
       } else {

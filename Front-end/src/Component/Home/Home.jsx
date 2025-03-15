@@ -13,6 +13,7 @@ import SideBar from "../SideBar/sideBar";
 import AddAppoint from "./AddAppoint";
 import { Trash2 } from "lucide-react";
 import Clock from "../Clock/Clock";
+import { toast, Slide } from "react-toastify";
 
 export default function Home() {
   const existingUser = !!cookie.get("access_token");
@@ -62,11 +63,9 @@ export default function Home() {
           return dateA - dateB;
         })
       : [];
-  console.log(userInfo);
 
   const handleExpiredAppointments = async () => {
-    const result = await dispatch(expiredAppointment());
-    console.log("Action result:", result);
+    await dispatch(expiredAppointment());
   };
 
   useEffect(() => {
@@ -74,9 +73,22 @@ export default function Home() {
   }, []);
 
   const handleDeleteAppoint = (id) => {
-    console.log("Deleting appointment with ID:", id);
     try {
-      dispatch(deleteAppoint(id));
+      dispatch(deleteAppoint(id)).then((r) => {
+        if (r.type === "appoint/delete/fulfilled") {
+          toast.success("rendez-vous supprimez avec success", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Slide,
+          });
+        }
+      });
     } catch (err) {
       console.error(err);
     }

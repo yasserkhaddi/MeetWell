@@ -1,4 +1,5 @@
-const { users } = require("../config/db");
+const { users } = require("../../../config/db");
+// const { users } = require("../config/db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { ObjectId } = require("mongodb");

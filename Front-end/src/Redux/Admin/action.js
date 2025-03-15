@@ -207,8 +207,6 @@ export const deleteAdminAccount = createAsyncThunk(
 export const addDisabledDate = createAsyncThunk(
   "admin/addDisabledDate",
   async (dayOff) => {
-    console.log(dayOff);
-
     const result = await axios.post(
       "http://localhost:6060/admin/add-disabled-date",
       dayOff
@@ -220,8 +218,6 @@ export const addDisabledDate = createAsyncThunk(
 export const removeDisabledDate = createAsyncThunk(
   "admin/removeDisabledDate",
   async (date) => {
-    console.log(date);
-
     const result = await axios.delete(
       `http://localhost:6060/admin/remove-disabled-date`,
       { data: { date } }
@@ -250,8 +246,6 @@ export const addUser = createAsyncThunk("admin/add-user", async (formData) => {
 export const upgradToAdmin = createAsyncThunk(
   "admin/upgradeToAdmin",
   async (id) => {
-    console.log(id);
-
     const result = await axios.put(
       `http://localhost:6060/admin/upgrade-to-admin/${id}`
     );

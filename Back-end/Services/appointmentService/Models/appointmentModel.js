@@ -1,4 +1,4 @@
-const { appoint, expiredAppoint, deletedAppoint } = require("../config/db");
+const { appoint, expiredAppoint, deletedAppoint } = require("../../../config/db");
 const { ObjectId } = require("mongodb");
 
 class AppointmentModel {
@@ -51,7 +51,7 @@ class AppointmentModel {
         .sort({ date: 1, time: 1 })
         .toArray();
 
-      if (fetchedAppoint.length === 0) {
+      if (!fetchedAppoint || fetchedAppoint.length === 0) {
         return {
           status: 404,
           success: false,
