@@ -3,10 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../../Styles/Registration.css";
 import { signUp } from "../../Redux/Users/actions";
 import logo from "../../tools/logo/logo.png";
 import Loading from "../Loading/Loading";
+import "../../Styles/Users/auth/Registration.css";
+import "../../Styles/Users/auth/Registration_mobile.css";
 
 export default function Registration() {
   useEffect(() => {
@@ -158,6 +159,9 @@ export default function Registration() {
           <div className="logo">
             <img src={logo} alt="" />
           </div>
+        </div>
+        <div className="logo_two">
+          <img src={logo} alt="logo" />
         </div>
         {loading && <Loading />}
       </div>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import "../../../Styles/password.css";
+import { useDispatch } from "react-redux";
 import cookie from "js-cookie";
 import { toast, Slide } from "react-toastify";
 import { verifyPassword, changePassword } from "../../../Redux/Users/actions";
 import { useNavigate } from "react-router-dom";
+import "../../../Styles/Users/profile/changePassword/password.css";
+import "../../../Styles/Users/profile/changePassword/password_mobile.css";
 
 export default function Password() {
   const [formData, setFormData] = useState({
@@ -36,14 +37,14 @@ export default function Password() {
     } else {
       nav("/");
     }
-  }, [existingUser, userInfo]);
+  }, [existingUser, userInfo, nav]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
-    if (formData.newPassword != confirmPass) {
+    if (formData.newPassword !== confirmPass) {
       setErrors("Veuillez saisir le même mot de passe.");
     } else {
       setErrors("");
@@ -54,9 +55,9 @@ export default function Password() {
     e.preventDefault();
     try {
       if (
-        formData.newPassword == "" ||
-        formData.oldPassword == "" ||
-        confirmPass == ""
+        formData.newPassword === "" ||
+        formData.oldPassword === "" ||
+        confirmPass === ""
       ) {
         toast.error("Remplissez tous les champs!", {
           position: "top-right",

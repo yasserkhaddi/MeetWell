@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../../Styles/DeleteAccount.css";
 import { deleteAccount } from "../../../Redux/Users/actions";
 import { useDispatch, useSelector } from "react-redux";
 import cookie from "js-cookie";
 import { toast, Slide } from "react-toastify";
+import "../../../Styles/Users/profile/deleteAccount/DeleteAccount.css";
+import "../../../Styles/Users/profile/deleteAccount/DeleteAccount_mobile.css";
 
 export default function () {
   const existingUser = !!cookie.get("access_token");

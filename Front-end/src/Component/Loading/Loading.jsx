@@ -1,6 +1,6 @@
 import React from "react";
 import ScaleLoader from "react-spinners/ScaleLoader";
-import "../../Styles/loading.css";
+import "../../Styles/loading/loading.css";
 export default function Loading() {
   return (
     <div className="loading_modal">

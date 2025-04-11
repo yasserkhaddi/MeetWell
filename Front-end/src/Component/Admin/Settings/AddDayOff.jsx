@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { addDisabledDate } from "../../../Redux/Admin/action";
-import "../../../Styles/addappoint.css";
+import "../../../Styles/Users/home/addAppoint/addappoint.css";
 import { CirclePlus, SquareChevronUp } from "lucide-react";
 import { toast, Slide } from "react-toastify";
 
@@ -114,7 +114,7 @@ export default function AddDayOff({ daysOff, setDaysOff }) {
                     className="nbr_textarea"
                     name="description"
                     rows={5}
-                    placeholder="Décrivez votre maladie ou un autre problème."
+                    placeholder="Décrivez votre raison pour ce jour de congé"
                   />
                   <div className="confirm_div">
                     <button type="submit" className="confirm">

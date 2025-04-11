@@ -1,5 +1,6 @@
 import React from "react";
-import "../../Styles/profileBar.css";
+import "../../Styles/Users/profile/profileBar/profileBar.css";
+import "../../Styles/Users/profile/profileBar/profileBar_mobile.css";
 
 export default function ProfileBar({ selectedOption, onOptionClick }) {
   const options = [

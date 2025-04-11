@@ -4,7 +4,7 @@ import { addAppoint, fetchTakenTime } from "../../Redux/Appointments/actions";
 import { fetchDisableDate } from "../../Redux/Admin/action";
 import { clearTakenTimes } from "../../Redux/Appointments/slice";
 import { CirclePlus, SquareChevronUp } from "lucide-react";
-import "../../Styles/addappoint.css";
+import "../../Styles/Users/home/addAppoint/addappoint.css";
 import { toast, Slide } from "react-toastify";
 
 export default function AddAppoint({ userInfo }) {

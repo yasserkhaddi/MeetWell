@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import cookie from "js-cookie";
 import {
   changeAdminPassword,
@@ -7,9 +7,10 @@ import {
 } from "../../../Redux/Admin/action";
 import { toast, Slide } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import "../../../Styles/admin/changePassword.css";
 import NavBar from "../AdminNavBar/NavBar";
 import { House, SquareChevronLeft } from "lucide-react";
+import "../../../Styles/admin/changePassword.css";
+import "../../../Styles/admin/changePassword_mobile.css";
 
 export default function ChangePassword() {
   const [formData, setFormData] = useState({
@@ -217,8 +218,7 @@ export default function ChangePassword() {
                 onClick={handleSubmit}
                 type="submit"
               >
-                {" "}
-                Confirmer{" "}
+                Confirmer
               </button>
             </div>
           </div>

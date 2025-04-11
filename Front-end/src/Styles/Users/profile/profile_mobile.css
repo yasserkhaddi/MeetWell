@@ -1,0 +1,14 @@
+@media screen and (max-width: 480px) {
+  .profile_bar_second {
+    margin-left: 44.5px;
+  }
+  .profile_content {
+    margin-left: 105px;
+    width: 100%;
+  }
+  .profile_component {
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

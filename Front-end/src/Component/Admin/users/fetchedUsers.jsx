@@ -31,7 +31,7 @@ export default function FetchedUsers() {
       setUsers(r.payload?.users || []);
       setFilteredUsers(r.payload?.users || []);
     });
-  }, [dispatch, users]);
+  }, [dispatch]);
 
   useEffect(() => {
     let filtered = users;
@@ -101,6 +101,8 @@ export default function FetchedUsers() {
         theme: "dark",
         transition: Slide,
       });
+      setUsers((prevUsers) => prevUsers.filter((u) => u._id !== id));
+      setFilteredUsers((prevUsers) => prevUsers.filter((u) => u._id !== id));
     });
   };
 
@@ -169,24 +171,28 @@ export default function FetchedUsers() {
                 filteredUsers.map((e, i) => (
                   <tr key={i}>
                     <td
+                      data="Nom et prénom "
                       style={{ cursor: "pointer" }}
                       onClick={() => handleUser(e)}
                     >
                       {e.nom} {e.prenom}
                     </td>
                     <td
+                      data="E-mail "
                       style={{ cursor: "pointer" }}
                       onClick={() => handleUser(e)}
                     >
                       {e.email}
                     </td>
                     <td
+                      data="Date de naissance "
                       onClick={() => handleUser(e)}
                       style={{ cursor: "pointer" }}
                     >
                       {e.dateDeNaissance}
                     </td>
                     <td
+                      data="Téléphone "
                       style={{ cursor: "pointer" }}
                       onClick={() => handleUser(e)}
                     >
@@ -194,7 +200,7 @@ export default function FetchedUsers() {
                         ? e.PhoneNumber
                         : "Aucun numéro de téléphone"}
                     </td>
-                    <td>
+                    <td data="Mot de passe ">
                       <button
                         onClick={() => handlePassword(e)}
                         className="afutb"
@@ -204,13 +210,14 @@ export default function FetchedUsers() {
                     </td>
 
                     <td
+                      data="Crée le "
                       onClick={() => handleUser(e)}
                       style={{ cursor: "pointer" }}
                     >
                       {e.created_at}
                     </td>
 
-                    <td>
+                    <td data="Actions ">
                       <div className="afutd">
                         <button
                           onClick={() => handlePopUp(e)}

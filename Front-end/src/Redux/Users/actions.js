@@ -12,6 +12,7 @@ export const signUp = createAsyncThunk("auth/signup", async (formData) => {
 export const logIn = createAsyncThunk("auth/login", async (formData) => {
   const result = await axios.post(
     "http://localhost:5050/user/login",
+
     formData,
     { withCredentials: true }
   );

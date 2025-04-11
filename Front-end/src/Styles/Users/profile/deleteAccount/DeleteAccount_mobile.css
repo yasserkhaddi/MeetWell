@@ -1,0 +1,9 @@
+@media screen and (max-width: 480px) {
+  .delete_container {
+    width: 100%;
+  }
+  .delete_content {
+    width: 100%;
+    padding: 10px;
+  }
+}

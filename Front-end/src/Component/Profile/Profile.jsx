@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../SideBar/sideBar";
 import ProfileBar from "./ProfileBar";
-import "../../Styles/profile.css";
+import "../../Styles/Users/profile/profile.css";
+import "../../Styles/Users/profile/profile_mobile.css";
 import cookie from "js-cookie";
 import InfoPerso from "./SwitchComponent/InfoPerso";
 import Password from "./SwitchComponent/passwordUpdate";

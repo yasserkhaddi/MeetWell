@@ -94,12 +94,12 @@ export default function FetchedUserAppointment() {
               {appointmentList.length > 0 ? (
                 appointmentList.map((e, i) => (
                   <tr key={i}>
-                    <td>{e._id} </td>
-                    <td> {e.phoneNumber} </td>
-                    <td> {e.date} </td>
-                    <td> {e.time} </td>
-                    <td> {e.timeSaved} </td>
-                    <td>
+                    <td data="Id ">{e._id} </td>
+                    <td data="Téléphone "> {e.phoneNumber} </td>
+                    <td data="Date "> {e.date} </td>
+                    <td data="Créneau réservé "> {e.time} </td>
+                    <td data="Temps enregistré "> {e.timeSaved} </td>
+                    <td data="Description ">
                       <button
                         className="description-button"
                         onClick={() => handleDescriptionClick(e.description)}
@@ -107,7 +107,7 @@ export default function FetchedUserAppointment() {
                         Voir Description
                       </button>
                     </td>
-                    <td>
+                    <td data="Actions ">
                       {" "}
                       <div className="afutd">
                         <button

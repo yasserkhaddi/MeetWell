@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import cookie from "js-cookie";
-import "../../../Styles/adminNavBar.css";
+import { User, Settings, ShieldCheck  , LogOut } from "lucide-react";
+import "../../../Styles/admin/adminNavBar.css";
+import "../../../Styles/admin/adminNavBar_mobile.css";
 
 export default function NavBar() {
   const existingUser = !!cookie.get("access_token");
@@ -53,14 +55,26 @@ export default function NavBar() {
         <div className="admin_nav_list" onClick={handleProfile}>
           Profil
         </div>
+        <div className="admin_nav_list_mobile" onClick={handleProfile}>
+          <User />
+        </div>
         <div className="admin_nav_list" onClick={handleSettings}>
           Paramètres
+        </div>
+        <div className="admin_nav_list_mobile" onClick={handleSettings}>
+          <Settings />
         </div>
         <div className="admin_nav_list" onClick={handleAdmin}>
           Administrateurs
         </div>
+        <div className="admin_nav_list_mobile" onClick={handleAdmin}>
+          <ShieldCheck   />
+        </div>
         <div className="admin_nav_list" onClick={handleLogout}>
           Déconnexion
+        </div>
+        <div className="admin_nav_list_mobile" onClick={handleLogout}>
+          <LogOut />
         </div>
       </div>
     </>

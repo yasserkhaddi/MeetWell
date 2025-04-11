@@ -1,0 +1,36 @@
+@media screen and (max-width: 480px) {
+  .admin_container_two {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    background-color: rgb(49, 51, 58);
+    width: 70%;
+    height: 400px;
+    border-radius: 8px;
+    display: flex;
+  }
+  .admin_logo {
+    display: none;
+  }
+  .admin_centre_line {
+    display: none;
+  }
+  .admin_first_half h2 {
+    display: none;
+  }
+  .admin_reg_input {
+    height: 25px;
+  }
+  .admin_reg_label {
+    margin-left: 20px;
+    margin-top: 8px;
+    color: white;
+  }
+  .admin_first_half {
+    width: 100%;
+  }
+  .admin_to_update {
+    margin-top: 65px;
+  }
+}

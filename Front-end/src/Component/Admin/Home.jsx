@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "../../Styles/adminHome.css";
 import cookie from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./AdminNavBar/NavBar";

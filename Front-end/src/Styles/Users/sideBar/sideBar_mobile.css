@@ -1,0 +1,33 @@
+@media screen and (max-width: 480px) {
+  .logout_button {
+    display: none;
+  }
+  .sidebar {
+    height: 100%;
+    width: 45px;
+  }
+  .logout_class {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 75%;
+    padding: 15px;
+    margin-left: 12px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    border: none;
+    border-radius: 12px;
+  }
+  .logout_class:hover {
+    background-color: rgb(52, 73, 94);
+    border-radius: 12px;
+  }
+}
+
+@media screen and (min-width: 481px) {
+  .logout_class {
+    display: none;
+  }
+}

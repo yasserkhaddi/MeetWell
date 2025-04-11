@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Slide } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../Redux/Users/actions";
 import cookie from "js-cookie";
 import logo from "../../tools/logo/logo.png";
+import "react-toastify/dist/ReactToastify.css";
+import "../../Styles/Users/auth/Registration_mobile.css";
 import Loading from "../Loading/Loading";
 
 export default function Login() {
@@ -131,6 +132,9 @@ export default function Login() {
           <div className="logo">
             <img src={logo} alt="logo" />
           </div>
+        </div>
+        <div className="logo_two">
+          <img src={logo} alt="logo" />
         </div>
         {loading && <Loading />}
       </div>

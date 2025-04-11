@@ -112,10 +112,10 @@ export default function DaysOff() {
                 {daysOff.length > 0 ? (
                   daysOff.map((e, i) => (
                     <tr key={i}>
-                      <td>{e._id}</td>
-                      <td>{e.date}</td>
-                      <td>{e.timeSaved}</td>
-                      <td>
+                      <td data="Id ">{e._id}</td>
+                      <td data="Date ">{e.date}</td>
+                      <td data="Enregistré en ">{e.timeSaved}</td>
+                      <td data="Description ">
                         <button
                           className="description-button"
                           onClick={() => handleShowDescription(e.description)}
@@ -123,7 +123,7 @@ export default function DaysOff() {
                           Voir Description
                         </button>
                       </td>
-                      <td>
+                      <td data="Action ">
                         <div className="afutd">
                           <button
                             onClick={() => handlDelete(e.date)}

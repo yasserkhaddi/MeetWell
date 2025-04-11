@@ -1,39 +1,8 @@
-.container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(49, 51, 58);
-  width: 60%;
-  height: 600px;
-  border-radius: 8px;
-  display: flex;
-}
-.container_login {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(49, 51, 58);
-  width: 60%;
-  height: 400px;
-  border-radius: 8px;
-  display: flex;
-}
-.container_login h2 {
-  text-align: center;
-  color: white;
-}
-.container h2 {
-  text-align: center;
-  color: white;
-}
-
-.registartion_form {
+.admin_registartion_form {
   display: flex;
   flex-direction: column;
 }
-.reg_input {
+.admin_reg_input {
   width: 65%;
   height: 40px;
   border: none;
@@ -43,15 +12,15 @@
   margin-left: 50px;
   margin-top: 10px;
 }
-.reg_input:focus {
+.admin_reg_input:focus {
   outline: none;
 }
-.reg_label {
+.admin_reg_label {
   margin-left: 20px;
   margin-top: 10px;
   color: white;
 }
-.reg_button {
+.admin_reg_button {
   width: 40%;
   height: 40px;
   border-radius: 8px;
@@ -61,32 +30,26 @@
   margin: 20px 0 0 91px;
   cursor: pointer;
 }
-.to_login {
+.admin_to_login {
   color: white;
   margin-top: 12px;
   margin-left: 50px;
 }
-.auth_links {
-  color: white;
-}
-.first_half {
+.admin_first_half {
   width: 65%;
 }
-.center_line {
-  margin: 0;
-}
-.logo {
+.admin_logo {
   width: 34.8%;
   display: flex;
   align-items: center;
 }
-.logo img {
+.admin_logo img {
   width: 100%;
   border-radius: 12px;
   border: none;
 }
 
-.container_two {
+.admin_container_two {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -98,11 +61,11 @@
   display: flex;
 }
 
-.container_two h2 {
+.admin_container_two h2 {
   text-align: center;
   color: white;
 }
 
-.to_update {
+.admin_to_update {
   margin-top: 100px;
 }

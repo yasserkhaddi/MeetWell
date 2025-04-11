@@ -1,0 +1,94 @@
+@media screen and (max-width: 480px) {
+  body,
+  html {
+    /* overflow-x: hidden; */
+    width: 100%;
+  }
+  .home_container {
+    width: 100%;
+  }
+  .content {
+    width: 100%;
+    margin-left: 40px;
+  }
+  .header {
+    width: 100%;
+  }
+  .header_top {
+    width: 100%;
+  }
+  .welcome_text {
+    font-size: 20px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  .header_top_right {
+    margin: 0;
+  }
+  .table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
+    min-width: unset;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 0.9em;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+  .table thead {
+    display: none;
+  }
+  .table td {
+    padding: 0.5rem 1rem;
+    width: 100%;
+    overflow: hidden;
+    word-break: break-word;
+    white-space: normal;
+  }
+  .table tbody {
+    display: block;
+    width: 100%;
+  }
+  .table tbody tr {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  td {
+    display: grid;
+    grid-template-columns: 15ch auto;
+  }
+  td:first-child {
+    padding-top: 2rem;
+  }
+  td:last-child {
+    padding-bottom: 2rem;
+  }
+  th {
+    display: none;
+  }
+  td::before {
+    content: attr(data) ": ";
+    font-weight: 700;
+  }
+  .appointments {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .td_disabled {
+    background: transparent;
+    display: none;
+  }
+  .appoint_false::before {
+    display: none;
+  }
+}

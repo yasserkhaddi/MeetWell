@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../Styles/home.css";
 import cookie from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,6 +13,8 @@ import AddAppoint from "./AddAppoint";
 import { Trash2 } from "lucide-react";
 import Clock from "../Clock/Clock";
 import { toast, Slide } from "react-toastify";
+import "../../Styles/Users/home/home.css";
+import "../../Styles/Users/home/home_mobile.css";
 
 export default function Home() {
   const existingUser = !!cookie.get("access_token");
@@ -30,9 +31,7 @@ export default function Home() {
   const nav = useNavigate();
   const dispatch = useDispatch();
 
-  const { appointment, expiredAppointments, error, loading } = useSelector(
-    (state) => state.appointment
-  );
+  const { appointment } = useSelector((state) => state.appointment);
 
   if (!existingUser) {
     nav("/");
@@ -134,7 +133,6 @@ export default function Home() {
                   <th>Date</th>
                   <th>Créneau réservé</th>
                   <th>Nr de téléphone</th>
-                  {/* <th>Description</th> */}
                   <th>Enregistré en</th>
                   <th>Actions</th>
                 </tr>
@@ -143,13 +141,12 @@ export default function Home() {
                 {sortedAppointments.length > 0 ? (
                   sortedAppointments.map((e) => (
                     <tr key={e._id}>
-                      <td>{e._id}</td>
-                      <td>{e.date}</td>
-                      <td>{e.time}</td>
-                      <td>{e.phoneNumber}</td>
-                      {/* <td className="description">{e.description}</td> */}
-                      <td>{e.timeSaved}</td>
-                      <td>
+                      <td data="Id">{e._id}</td>
+                      <td data="Date">{e.date}</td>
+                      <td data="Créneau réservé">{e.time}</td>
+                      <td data="Nr de téléphone">{e.phoneNumber}</td>
+                      <td data="Enregistré en">{e.timeSaved}</td>
+                      <td data="Actions">
                         <button
                           onClick={() => handleDeleteAppoint(e._id)}
                           className="delete_button"

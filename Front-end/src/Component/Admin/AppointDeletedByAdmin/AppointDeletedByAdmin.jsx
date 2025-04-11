@@ -53,7 +53,7 @@ export default function AppointDeletedByAdmin() {
     };
 
     fetchData();
-  }, [dispatch, delAppoint]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!searchTerm) {
@@ -119,6 +119,8 @@ export default function AppointDeletedByAdmin() {
           theme: "dark",
           transition: Slide,
         });
+        setDelAppoint((prev) => prev.filter((a) => a._id !== id));
+        setFilteredAppointments((prev) => prev.filter((a) => a._id !== id));
       }
     });
   };
@@ -166,13 +168,13 @@ export default function AppointDeletedByAdmin() {
 
                   return (
                     <tr key={i}>
-                      <td> {e._id} </td>
-                      <td> {fullName} </td>
-                      <td> {e.phoneNumber} </td>
-                      <td> {e.date} </td>
-                      <td> {e.time} </td>
-                      <td> {e.timeSaved} </td>
-                      <td>
+                      <td data="Id "> {e._id} </td>
+                      <td data="Nom et Prénom "> {fullName} </td>
+                      <td data="Numéro de téléphone "> {e.phoneNumber} </td>
+                      <td data="Date "> {e.date} </td>
+                      <td data="Créneau réservé "> {e.time} </td>
+                      <td data="Temps enregistré "> {e.timeSaved} </td>
+                      <td data="Description ">
                         <button
                           className="description-button"
                           onClick={() => handleShowDescription(e.description)}
@@ -180,7 +182,7 @@ export default function AppointDeletedByAdmin() {
                           Voir Description
                         </button>
                       </td>
-                      <td>
+                      <td data="Actions ">
                         <div className="afutd">
                           <button
                             onClick={() => handelDelete(e._id)}

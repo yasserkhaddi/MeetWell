@@ -31,3 +31,6 @@
 .admin_nav_list:hover::after {
   width: 100%;
 }
+.admin_nav_list_mobile {
+  display: none;
+}

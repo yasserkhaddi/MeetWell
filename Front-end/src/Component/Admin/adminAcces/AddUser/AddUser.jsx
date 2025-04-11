@@ -3,11 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../../../../Styles/Registration.css";
 import { addUser } from "../../../../Redux/Admin/action";
 import logo from "../../../../tools/logo/logo.png";
 import NavBar from "../../AdminNavBar/NavBar";
 import { SquareChevronLeft, House } from "lucide-react";
+// import "../../../../Styles/Users/auth/Registration.css";
+import "../../../../Styles/admin/admin_add_user.css";
+import "../../../../Styles/admin/admin_add_user_mobile.css";
 
 export default function AddUser() {
   useEffect(() => {
@@ -108,7 +110,7 @@ export default function AddUser() {
     <>
       <div className="register_homepage">
         <NavBar />
-        <div className="to_update">
+        <div className="admin_to_update">
           <div className="admin_user_appointment_title">
             <button
               onClick={handleNav}
@@ -124,63 +126,57 @@ export default function AddUser() {
             </button>
           </div>
         </div>
-        <div className="container_two">
-          <div className="first_half">
+        <div className="admin_container_two">
+          <div className="admin_first_half">
             <h2>Ajouter un utilisateur</h2>
-            <form className="registartion_form" onSubmit={handleSubmit}>
-              <label className="reg_label">Nom :</label>
+            <form className="admin_registartion_form" onSubmit={handleSubmit}>
+              <label className="admin_reg_label">Nom :</label>
               <input
                 type="text"
                 name="nom"
                 value={formData.nom}
                 onChange={handleOnChange}
-                className="reg_input"
+                className="admin_reg_input"
               />
-              <label className="reg_label">Prénom :</label>
+              <label className="admin_reg_label">Prénom :</label>
               <input
                 type="text"
                 name="prenom"
                 value={formData.prenom}
                 onChange={handleOnChange}
-                className="reg_input"
+                className="admin_reg_input"
               />
-              <label className="reg_label">Date De Naissance :</label>
+              <label className="admin_reg_label">Date De Naissance :</label>
               <input
                 type="date"
                 name="dateDeNaissance"
                 value={formData.dateDeNaissance}
                 onChange={handleOnChange}
-                className="reg_input"
+                className="admin_reg_input"
               />
-              <label className="reg_label">E-mail :</label>
+              <label className="admin_reg_label">E-mail :</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleOnChange}
-                className="reg_input"
+                className="admin_reg_input"
               />
-              <label className="reg_label">Mot De Passe :</label>
+              <label className="admin_reg_label">Mot De Passe :</label>
               <input
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleOnChange}
-                className="reg_input"
+                className="admin_reg_input"
               />
-              <button type="submit" className="reg_button">
+              <button type="submit" className="admin_reg_button">
                 S'inscrire
               </button>
-              <span className="to_login">
-                Vous avez déjà un compte?&nbsp;
-                <Link to="/" className="auth_links">
-                  Se connecter !
-                </Link>{" "}
-              </span>
             </form>
           </div>
-          <hr className="centre_line" />
-          <div className="logo">
+          <hr className="admin_centre_line" />
+          <div className="admin_logo">
             <img src={logo} alt="" />
           </div>
         </div>

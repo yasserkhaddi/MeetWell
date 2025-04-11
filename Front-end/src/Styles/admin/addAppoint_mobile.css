@@ -1,0 +1,11 @@
+@media screen and (max-width: 480px) {
+  .admin_add_appoint_content {
+    display: none;
+  }
+  .admin_add_appoint_form {
+    transform: translate(-50%, -45%);
+  }
+  .admin_add_appoint_form_right_button {
+    width: auto;
+  }
+}

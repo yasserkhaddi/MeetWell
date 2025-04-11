@@ -6,6 +6,6 @@ app.use("/admin", router);
 const ADMIN_PORT = process.env.ADMIN_PORT;
 const port = ADMIN_PORT || 6060;
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`server connected successfuly on ${port}`);
 });

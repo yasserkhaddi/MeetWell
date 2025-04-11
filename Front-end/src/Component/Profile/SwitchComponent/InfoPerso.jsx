@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import "../../../Styles/infoPerso.css";
+import "../../../Styles/Users/profile/info/infoPerso.css";
+import "../../../Styles/Users/profile/info/infoPerso_mobile.css";
 import cookie from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { editUser, addPhoneNumber } from "../../../Redux/Users/actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast, Slide } from "react-toastify";
 import { Lock, LockOpen } from "lucide-react";
 
 export default function InfoPerso() {
   const nav = useNavigate();
   const dispatch = useDispatch();
-
-  const { loading, error, user } = useSelector((state) => state.users);
 
   const existingUser = !!cookie.get("access_token");
   const userCookies = cookie.get("client_info");

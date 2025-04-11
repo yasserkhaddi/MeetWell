@@ -22,7 +22,6 @@ export default function UpdateToUser() {
   const [searchOption, setSearchOption] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  // const existingUser = !!cookie.get("access_token");
   const userCookies = cookie.get("client_info");
   let userInfo;
 
@@ -187,30 +186,32 @@ export default function UpdateToUser() {
                   const isCurrentUser = e._id === userInfo?._id; // Check if it's the logged-in user
                   return (
                     <tr key={i}>
-                      <td>
+                      <td data="Nom et Prénom ">
                         {e.nom} {e.prenom}
                       </td>
-                      <td>{e.email}</td>
-                      <td>{e.dateDeNaissance}</td>
-                      <td>
+                      <td data="E-mail ">{e.email}</td>
+                      <td data="Date de naissance ">{e.dateDeNaissance}</td>
+                      <td data="Téléphone ">
                         {e.PhoneNumber
                           ? e.PhoneNumber
                           : "Aucun numéro de téléphone"}
                       </td>
-                      <td>{e.created_at}</td>
-                      <td>{e.isAdmin ? "Admin" : "Normale"}</td>
-                      <td>
+                      <td data="Crée le ">{e.created_at}</td>
+                      <td data="Type d'utilisateur ">
+                        {e.isAdmin ? "Admin" : "Normale"}
+                      </td>
+                      <td data="Actions ">
                         <div className="afutd">
                           {e.isAdmin ? (
                             <Button
-                              disabled={isCurrentUser} // Disable for the logged-in user
+                              disabled={isCurrentUser}
                               onClick={() => handleToUser(e._id, e)}
                             >
                               Révoquer l'administrateur
                             </Button>
                           ) : (
                             <button
-                              disabled={isCurrentUser} // Disable for the logged-in user
+                              disabled={isCurrentUser}
                               onClick={() => handlePopUp(e)}
                               className="afutb"
                             >

@@ -46,7 +46,7 @@ export default function FetchedAppointment() {
       setAppointments(r.payload.appointments);
       setFilteredAppointments(r.payload.appointments);
     });
-  }, [dispatch, appointments]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!searchTerm) {
@@ -64,8 +64,12 @@ export default function FetchedAppointment() {
         const fullName = user ? `${user.prenom} ${user.nom}`.toLowerCase() : "";
         return (
           fullName.includes(searchTerm.toLowerCase()) ||
-          appointment.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          appointment.prenom.toLowerCase().includes(searchTerm.toLowerCase())
+          (appointment.nom?.toLowerCase() || "").includes(
+            searchTerm.toLowerCase()
+          ) ||
+          (appointment.prenom?.toLowerCase() || "").includes(
+            searchTerm.toLowerCase()
+          )
         );
       }
       return true;
@@ -92,7 +96,7 @@ export default function FetchedAppointment() {
   const handlDelete = (id) => {
     dispatch(deleteAppoint(id)).then((r) => {
       if (r.type === "admin/deleteAppoint/fulfilled") {
-        toast.success("rendez-vous supprimez avec success", {
+        toast.success("Rendez-vous supprimé avec succès", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -103,6 +107,9 @@ export default function FetchedAppointment() {
           theme: "dark",
           transition: Slide,
         });
+
+        setAppointments((prev) => prev.filter((a) => a._id !== id));
+        setFilteredAppointments((prev) => prev.filter((a) => a._id !== id));
       }
     });
   };
@@ -157,13 +164,13 @@ export default function FetchedAppointment() {
 
                   return (
                     <tr key={i}>
-                      <td> {e._id} </td>
-                      <td> {fullName} </td>
-                      <td> {e.phoneNumber} </td>
-                      <td> {e.date} </td>
-                      <td> {e.time} </td>
-                      <td> {e.timeSaved} </td>
-                      <td>
+                      <td data="Id "> {e._id} </td>
+                      <td data="Nom et Prénom "> {fullName} </td>
+                      <td data="Numéro de téléphone "> {e.phoneNumber} </td>
+                      <td data="Date "> {e.date} </td>
+                      <td data="Créneau réservé "> {e.time} </td>
+                      <td data="Temps enregistré "> {e.timeSaved} </td>
+                      <td data="Description ">
                         <button
                           className="description-button"
                           onClick={() => handleShowDescription(e.description)}
@@ -171,7 +178,7 @@ export default function FetchedAppointment() {
                           Voir Description
                         </button>
                       </td>
-                      <td>
+                      <td data="Actions ">
                         <div className="afutd">
                           <button
                             onClick={() => handlDelete(e._id)}

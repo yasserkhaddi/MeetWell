@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../../Styles/cards.css";
+import "../../Styles/admin/cards.css";
 
 export default function Cards() {
   const [cards, setCards] = useState([]);

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { House } from "lucide-react";
 import { toast, Slide } from "react-toastify";
 import "../../../Styles/admin/addAppoint.css";
+import "../../../Styles/admin/addAppoint_mobile.css";
 
 export default function AdminAddAppoint() {
   const [formData, setFormData] = useState({

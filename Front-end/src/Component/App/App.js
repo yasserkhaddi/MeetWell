@@ -5,7 +5,6 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Registration from "../Authentification/Registration";
 import Login from "../Authentification/Login";
-import "../../Styles/app.css";
 import Home from "../Home/Home";
 import Loading from "../Loading/Loading";
 import Profile from "../Profile/Profile";
@@ -26,6 +25,7 @@ import DaysOff from "../Admin/Settings/DaysOff";
 import AdminAccess from "../Admin/adminAcces/AdminAccess";
 import AddUser from "../Admin/adminAcces/AddUser/AddUser";
 import UpdateToUser from "../Admin/adminAcces/updateToAdmin/UpdateToAdmin";
+import "../../Styles/app/app.css";
 
 export default function App() {
   const existingUser = !!cookie.get("access_token");

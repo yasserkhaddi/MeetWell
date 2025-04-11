@@ -1,0 +1,8 @@
+@media screen and (max-width: 480px) {
+  .profile_bar {
+    height: 100%;
+    width: 120px;
+  }
+}
+@media screen and (min-width: 481px) {
+}
