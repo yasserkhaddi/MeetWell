@@ -19,6 +19,15 @@ export const logIn = createAsyncThunk("auth/login", async (formData) => {
   return result.data;
 });
 
+export const GoogleAuth = createAsyncThunk("auth/google", async (userData) => {
+  const result = await axios.post(
+    "http://localhost:5050/user/google",
+    userData,
+    { withCredentials: true }
+  );
+  return result.data;
+});
+
 export const editUser = createAsyncThunk(
   "user/edit",
   async ({ id, formData }) => {
@@ -78,6 +87,39 @@ export const deleteAccount = createAsyncThunk(
     const result = await axios.delete(
       `http://localhost:5050/user/deleteAccount/${id}`,
       { withCredentials: true }
+    );
+    return result.data;
+  }
+);
+
+export const searchAccounts = createAsyncThunk(
+  "User/searchAccount",
+  async (email) => {
+    const result = await axios.post(
+      "http://localhost:5050/user/search-account",
+      { email }
+    );
+    return result.data;
+  }
+);
+
+export const generateEmail = createAsyncThunk(
+  "User/generateForgotPasswordEmail",
+  async (email) => {
+    const result = await axios.post(
+      "http://localhost:5050/user/generate-email",
+      { email }
+    );
+    return result.data;
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "User/resetPassword",
+  async ({ token, password }) => {
+    const result = await axios.post(
+      "http://localhost:5050/user/reset-password",
+      { token, password }
     );
     return result.data;
   }

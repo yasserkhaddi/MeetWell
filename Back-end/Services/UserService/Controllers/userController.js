@@ -52,6 +52,80 @@ class userController {
     }
   }
 
+  // google
+  async google(req, res) {
+    try {
+      const result = await user.google(req.body);
+
+      if (result.valid) {
+        // Set the cookies
+        res.cookie(USER_COOKIE_ONE, result.token, {
+          sameSite: "Lax",
+          secure: false,
+          expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+          path: "/",
+        });
+        res.cookie(USER_COOKIE_TWO, JSON.stringify(result.user), {
+          sameSite: "Lax",
+          secure: false,
+          expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+          path: "/",
+        });
+
+        return res.status(result.status).json({
+          message1: result.message_one,
+          message2: result.message,
+          firstTime: result.firstTime,
+          user: {
+            ...result.user,
+            isAdmin: result.user.isAdmin,
+          },
+        });
+      } else {
+        return res.status(result.status).json({ message: result.message });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  //searching account
+  async searchinAccount(req, res) {
+    try {
+      const result = await user.searchinAccount(req.body.email);
+      return res
+        .status(result.status)
+        .json({ message: result.message, user: result.user });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  // generate email
+  async generateEmail(req, res) {
+    try {
+      const result = await user.generateEmail(req.body.email);
+      return res.status(result.status).json({ message: result.message });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  // reset password
+  async resetpassword(req, res) {
+    try {
+      const { token, password } = req.body;
+      const result = await user.resetPassword(token, password);
+      return res.status(result.status).json({ message: result.message });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
   //edit user
   edit(req, res) {
     try {

@@ -108,6 +108,7 @@ export default function AppointDeletedByAdmin() {
   const handelDelete = (id) => {
     dispatch(deleteAppointPerAdmin(id)).then((r) => {
       if (r.type === "admin/deleteAppointPerAdmin/fulfilled") {
+        toast.dismiss();
         toast.success("rendez-vous supprimez avec success", {
           position: "top-right",
           autoClose: 5000,

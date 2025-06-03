@@ -7,6 +7,10 @@ import {
   verifyPassword,
   changePassword,
   deleteAccount,
+  GoogleAuth,
+  searchAccounts,
+  generateEmail,
+  resetPassword,
 } from "./actions";
 
 const initialState = {
@@ -52,15 +56,33 @@ const userslice = createSlice({
 
         state.loading = false;
       })
+      //.....................Google................................
+
+      .addCase(GoogleAuth.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(GoogleAuth.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(GoogleAuth.rejected, (state, action) => {
+        state.error = action.error.message;
+        console.log(state.error);
+
+        state.loading = false;
+      })
+
       //.....................edit................................
       .addCase(editUser.pending, (state) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       })
       .addCase(editUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-        state.error = false;
+        state.error = null;
       })
       .addCase(editUser.rejected, (state, action) => {
         state.loading = false;
@@ -69,12 +91,12 @@ const userslice = createSlice({
       //.....................add phone number................................
       .addCase(addPhoneNumber.pending, (state) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       })
       .addCase(addPhoneNumber.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-        state.error = false;
+        state.error = null;
       })
       .addCase(addPhoneNumber.rejected, (state, action) => {
         state.loading = false;
@@ -83,12 +105,12 @@ const userslice = createSlice({
       //.....................verify password................................
       .addCase(verifyPassword.pending, (state) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       })
       .addCase(verifyPassword.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-        state.error = false;
+        state.error = null;
       })
       .addCase(verifyPassword.rejected, (state, action) => {
         state.loading = false;
@@ -97,12 +119,12 @@ const userslice = createSlice({
       //.....................change password................................
       .addCase(changePassword.pending, (state) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       })
       .addCase(changePassword.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-        state.error = false;
+        state.error = null;
       })
       .addCase(changePassword.rejected, (state, action) => {
         state.loading = false;
@@ -111,14 +133,56 @@ const userslice = createSlice({
       //.....................Delete account................................
       .addCase(deleteAccount.pending, (state) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       })
       .addCase(deleteAccount.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-        state.error = false;
+        state.error = null;
       })
       .addCase(deleteAccount.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //.....................forgot password................................
+      .addCase(searchAccounts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(searchAccounts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(searchAccounts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //.....................generate email................................
+      .addCase(generateEmail.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(generateEmail.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(generateEmail.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //.....................reset password................................
+      .addCase(resetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

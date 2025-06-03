@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { signUp } from "../../Redux/Users/actions";
+import { signUp, GoogleAuth } from "../../Redux/Users/actions";
 import logo from "../../tools/logo/logo.png";
 import Loading from "../Loading/Loading";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { app } from "../../tools/firebase/firebase";
 import "../../Styles/Users/auth/Registration.css";
 import "../../Styles/Users/auth/Registration_mobile.css";
 
@@ -45,7 +47,7 @@ export default function Registration() {
       formData.password === "" ||
       formData.prenom === ""
     ) {
-      toast("Remplissez tous les champs!", {
+      toast.error("Remplissez tous les champs!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -97,6 +99,52 @@ export default function Registration() {
     }
   }, [error, errorTriggered]);
 
+  const handleGoogleAuth = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const auth = getAuth(app);
+
+      const result = await signInWithPopup(auth, provider);
+
+      const firstName = result.user.displayName.split(" ")[0];
+      const lastName = result.user.displayName.split(" ")[1];
+      console.log(result.user);
+      const r = result.user;
+      const userData = {
+        email: r.email,
+        nom: lastName,
+        prenom: firstName,
+        dateDeNaissance: "2000-01-01",
+      };
+      await dsp(GoogleAuth(userData)).then((result) => {
+        if (result.type === "auth/google/fulfilled") {
+          toast.success("Connexion réussie", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Slide,
+          });
+
+          if (result.payload?.user.isAdmin) {
+            nav("/admin/home");
+          } else {
+            nav("/home");
+            if (result.payload?.user.firstTime) {
+              window.alert("test");
+            }
+          }
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="register_homepage">
@@ -146,6 +194,13 @@ export default function Registration() {
               />
               <button type="submit" className="reg_button">
                 S'inscrire
+              </button>
+              <button
+                type="button"
+                onClick={handleGoogleAuth}
+                className="google_auth"
+              >
+                Continuer avec Google
               </button>
               <span className="to_login">
                 Vous avez déjà un compte?&nbsp;

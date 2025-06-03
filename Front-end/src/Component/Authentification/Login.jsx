@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Slide } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { logIn } from "../../Redux/Users/actions";
+import { logIn, GoogleAuth } from "../../Redux/Users/actions";
 import cookie from "js-cookie";
 import logo from "../../tools/logo/logo.png";
 import "react-toastify/dist/ReactToastify.css";
-import "../../Styles/Users/auth/Registration_mobile.css";
 import Loading from "../Loading/Loading";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { app } from "../../tools/firebase/firebase";
+import "../../Styles/Users/auth/Registration_mobile.css";
 
 export default function Login() {
   useEffect(() => {
@@ -28,7 +30,7 @@ export default function Login() {
   const nav = useNavigate();
   const dsp = useDispatch();
 
-  const { user, loading, error } = useSelector((state) => state.users);
+  const { loading, error } = useSelector((state) => state.users);
 
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -94,6 +96,52 @@ export default function Login() {
     }
   }, [error]);
 
+  const handleGoogleAuth = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const auth = getAuth(app);
+
+      const result = await signInWithPopup(auth, provider);
+
+      const firstName = result.user.displayName.split(" ")[0];
+      const lastName = result.user.displayName.split(" ")[1];
+      console.log(result.user);
+      const r = result.user;
+      const userData = {
+        email: r.email,
+        nom: lastName,
+        prenom: firstName,
+        dateDeNaissance: "2000-01-01",
+      };
+      await dsp(GoogleAuth(userData)).then((result) => {
+        if (result.type === "auth/google/fulfilled") {
+          toast.success("Connexion réussie", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Slide,
+          });
+
+          if (result.payload?.user.isAdmin) {
+            nav("/admin/home");
+          } else {
+            nav("/home");
+            if (result.payload?.user.firstTime) {
+              window.alert("test");
+            }
+          }
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="register_homepage">
@@ -107,7 +155,7 @@ export default function Login() {
                 name="email"
                 value={formData.email}
                 onChange={handleOnChange}
-                className="reg_input"
+                className="reg_input_login"
               />
               <label className="reg_label">Mot De Passe :</label>
               <input
@@ -115,15 +163,27 @@ export default function Login() {
                 name="password"
                 value={formData.password}
                 onChange={handleOnChange}
-                className="reg_input"
+                className="reg_input_login"
               />
               <button type="submit" className="reg_button">
                 Se Connecter
               </button>
+              <button
+                type="button"
+                onClick={handleGoogleAuth}
+                className="google_auth"
+              >
+                Continuer avec Google
+              </button>
               <span className="to_login">
                 Vous n'avez pas un compte?&nbsp;
                 <Link to="/signup" className="auth_links">
-                  S'inscrire !{" "}
+                  S'inscrire !
+                </Link>
+              </span>
+              <span className="foget_password">
+                <Link to="/forgot-password" className="auth_links">
+                  Mot de passe oublié ?
                 </Link>
               </span>
             </form>

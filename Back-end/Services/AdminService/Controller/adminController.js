@@ -105,11 +105,15 @@ class adminController {
 
   async UpgradeToAdmin(req, res) {
     try {
-      const result = await admin.UpgradeToAdmin(req.params.id);
-      res.status(result.status).json(result.message);
+      const currentUserId = req.body.userId;
+      const targetUserId = req.params.id;
+
+      const result = await admin.upgradeToAdmin(currentUserId, targetUserId);
+
+      res.status(result.status).json({ message: result.message });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ message: "Erreur interne du serveur" });
     }
   }
 
@@ -117,8 +121,8 @@ class adminController {
 
   async downgradeToUser(req, res) {
     try {
-      const result = await admin.downgradeToUSer(req.params.id);
-      res.status(result.status).json(result.message);
+      const result = await admin.downgradeToUser(req.params.id);
+      res.status(result.status).json({ message: result.message });
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Internal server error" });

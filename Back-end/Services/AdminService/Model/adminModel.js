@@ -171,41 +171,89 @@ class AdminModel {
 
   //------------------------------------------------------------------------------------------
 
-  async UpgradeToAdmin(userId) {
+  // async UpgradeToAdmin(userId) {
+  //   try {
+  //     const user = await users.findOne({ _id: new ObjectId(userId) });
+  //     if (!user) {
+  //       return { status: 400, message: "Utilisateur non trouvé" };
+  //     }
+
+  //     await users.updateOne(
+  //       { _id: new ObjectId(userId) },
+  //       { $set: { isAdmin: true, role: "manager" } }
+  //     );
+  //     return { status: 200, message: "Modification validée" };
+  //   } catch (err) {
+  //     console.error(err);
+  //     return { status: 500, message: "Internal server error" };
+  //   }
+  // }
+
+  async upgradeToAdmin(currentUserId, targetUserId) {
     try {
-      const user = await users.findOne({ _id: new ObjectId(userId) });
-      if (!user) {
-        return { status: 400, message: "Utilisateur non trouvé" };
-      } else {
-        await users.updateOne(
-          { _id: new ObjectId(userId) },
-          { $set: { isAdmin: true } }
-        );
-        return { status: 200, message: "Modification validée" };
+      // Check if the user performing the upgrade is an admin
+      const currentUser = await users.findOne({
+        _id: new ObjectId(currentUserId),
+      });
+
+      if (!currentUser || currentUser.role !== "admin") {
+        return {
+          status: 403,
+          message:
+            "Accès refusé : seul un administrateur peut effectuer cette opération.",
+        };
       }
+
+      // Check if the target user exists
+      const targetUser = await users.findOne({
+        _id: new ObjectId(targetUserId),
+      });
+
+      if (!targetUser) {
+        return {
+          status: 400,
+          message: "Utilisateur à mettre à jour non trouvé",
+        };
+      }
+
+      await users.updateOne(
+        { _id: new ObjectId(targetUserId) },
+        { $set: { isAdmin: true, role: "manager" } }
+      );
+
+      return { status: 200, message: "Modification validée" };
     } catch (err) {
       console.error(err);
-      return { status: 500, message: "Internal server error" };
+      return { status: 500, message: "Erreur interne du serveur" };
     }
   }
 
   //------------------------------------------------------------------------------------------
 
-  async downgradeToUSer(userId) {
+  async downgradeToUser(userId) {
     try {
       const user = await users.findOne({ _id: new ObjectId(userId) });
+
       if (!user) {
         return { status: 400, message: "Utilisateur non trouvé" };
-      } else {
-        await users.updateOne(
-          { _id: new ObjectId(userId) },
-          { $set: { isAdmin: false } }
-        );
-        return { status: 200, message: "Modification validée" };
       }
+
+      if (user.role === "admin") {
+        return {
+          status: 403,
+          message: "le gestionnaire ne peut pas modifier l'administrateur",
+        };
+      }
+
+      await users.updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { isAdmin: false, role: "user" } }
+      );
+
+      return { status: 200, message: "Modification validée" };
     } catch (err) {
       console.error(err);
-      return { status: 500, message: "Internal server error" };
+      return { status: 500, message: "Erreur interne du serveur" };
     }
   }
 }

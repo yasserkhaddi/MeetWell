@@ -87,8 +87,8 @@ export default function UpdateToUser() {
     setSelectedUser(null);
   };
 
-  const handleConfirm = (id) => {
-    dispatch(upgradToAdmin(id)).then((r) => {
+  const handleConfirm = (id, userId) => {
+    dispatch(upgradToAdmin({ id, userId })).then((r) => {
       if (r.type === "admin/upgradeToAdmin/fulfilled") {
         const updatedUsers = users.map((user) =>
           user._id === id ? { ...user, isAdmin: true } : user
@@ -111,6 +111,18 @@ export default function UpdateToUser() {
             }
           );
         }
+      } else {
+        toast.error(r.payload, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
       }
       closePopup();
     });
@@ -138,6 +150,18 @@ export default function UpdateToUser() {
             transition: Slide,
           }
         );
+      } else {
+        toast.error(r.payload, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
       }
     });
   };
@@ -183,7 +207,7 @@ export default function UpdateToUser() {
             <tbody>
               {filteredUsers.length > 0 ? (
                 filteredUsers.map((e, i) => {
-                  const isCurrentUser = e._id === userInfo?._id; // Check if it's the logged-in user
+                  const isCurrentUser = e._id === userInfo?._id;
                   return (
                     <tr key={i}>
                       <td data="Nom et Prénom ">
@@ -230,7 +254,10 @@ export default function UpdateToUser() {
                               <div className="to_center">
                                 <button
                                   onClick={() =>
-                                    handleConfirm(selectedUser._id)
+                                    handleConfirm(
+                                      selectedUser._id,
+                                      userInfo._id
+                                    )
                                   }
                                   className="confirm_button"
                                 >

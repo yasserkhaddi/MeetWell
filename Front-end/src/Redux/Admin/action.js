@@ -245,20 +245,35 @@ export const addUser = createAsyncThunk("admin/add-user", async (formData) => {
 
 export const upgradToAdmin = createAsyncThunk(
   "admin/upgradeToAdmin",
-  async (id) => {
-    const result = await axios.put(
-      `http://localhost:6060/admin/upgrade-to-admin/${id}`
-    );
-    return result.data;
+  async ({ id, userId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:6060/admin/upgrade-to-admin/${id}`,
+        { userId }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.data?.message) {
+        return rejectWithValue(error.response.data.message);
+      }
+      return rejectWithValue("Erreur inconnue");
+    }
   }
 );
 
 export const downgradeToUser = createAsyncThunk(
   "admin/downgradeToUser",
-  async (id) => {
-    const result = await axios.put(
-      `http://localhost:6060/admin/downgrade-to-user/${id}`
-    );
-    return result.data;
+  async (id, { rejectWithValue }) => {
+    try {
+      const result = await axios.put(
+        `http://localhost:6060/admin/downgrade-to-user/${id}`
+      );
+      return result.data;
+    } catch (error) {
+      if (error.response && error.response.data?.message) {
+        return rejectWithValue(error.response.data.message);
+      }
+      return rejectWithValue("Erreur inconnue");
+    }
   }
 );

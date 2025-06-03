@@ -6,51 +6,45 @@ pm2.connect((err) => {
     process.exit(2);
   }
 
-  // Users Service
-  pm2.start(
+  const services = [
     {
       name: "Users-service",
       script: "./Services/UserService/app.js",
       watch: true,
     },
-    (err, apps) => {
-      if (err) {
-        console.error("Error starting Users Service:", err);
-      } else {
-        console.log("Users Service is running");
-      }
-    }
-  );
-
-  // Appointments Service
-  pm2.start(
     {
       name: "Appointments-service",
       script: "./Services/appointmentService/app.js",
       watch: true,
     },
-    (err, apps) => {
-      if (err) {
-        console.error("Error starting Appointments Service:", err);
-      } else {
-        console.log("Appointments Service is running");
-      }
-    }
-  );
-
-  //Admin Service
-  pm2.start(
     {
       name: "Admin-service",
       script: "./Services/AdminService/app.js",
       watch: true,
     },
-    (err, apps) => {
+  ];
+
+  services.forEach((service) => {
+    pm2.start(service, (err) => {
       if (err) {
-        console.error("Error starting Admin Service:", err);
+        console.error(`Error starting ${service.name}:`, err);
       } else {
-        console.log("Admin Service is running");
+        console.log(`${service.name} is running`);
       }
-    }
-  );
+    });
+  });
+
+  // Graceful shutdown on Ctrl+C
+  process.on("SIGINT", () => {
+    console.log("\nStopping all PM2 services...");
+    pm2.stop("all", (err) => {
+      if (err) {
+        console.error("Error stopping services:", err);
+      } else {
+        console.log("All services stopped.");
+        pm2.disconnect();
+        process.exit(0);
+      }
+    });
+  });
 });

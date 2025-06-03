@@ -117,6 +117,10 @@ export default function AddAppoint({ userInfo }) {
     });
   };
 
+  const maxDateObj = new Date();
+  maxDateObj.setFullYear(maxDateObj.getFullYear() + 10);
+  const maxDate = maxDateObj.toISOString().split("T")[0];
+
   return (
     <div>
       <button className="add_button" onClick={toggleModel}>
@@ -159,6 +163,7 @@ export default function AddAppoint({ userInfo }) {
                   name="date"
                   className="nbr_input"
                   min={new Date().toISOString().split("T")[0]}
+                  max={maxDate}
                   disabled={isDateDisabled(formData.date)}
                 />
                 {/* Tooltip for the disabled date */}

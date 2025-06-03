@@ -6,6 +6,10 @@ const verifyUser = require("../Utils/verifyUser");
 
 router.post("/signup", user.signUp);
 router.post("/login", user.logIn);
+router.post("/google", user.google);
+router.post("/search-account", user.searchinAccount);
+router.post("/generate-email", user.generateEmail);
+router.post("/reset-password", user.resetpassword);
 router.put("/edit/:id", verifyUser, user.edit);
 router.put("/addPhone/:id", verifyUser, user.addPhoneNubmer);
 router.post("/verifyPass", verifyUser, user.verifyPassword);

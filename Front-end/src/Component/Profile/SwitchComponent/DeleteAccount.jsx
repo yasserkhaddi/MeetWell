@@ -27,13 +27,16 @@ export default function () {
   }, [existingUser, userInfo]);
 
   const [cancel, setCancel] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const handleCancel = (e) => {
     e.preventDefault();
     setCancel(true);
   };
+
   const nav = useNavigate();
   const dispatch = useDispatch();
-  const { error, user, loading } = useSelector((state) => state.users);
+
   const handleDelete = (e) => {
     e.preventDefault();
     const id = userInfo._id;
@@ -53,7 +56,6 @@ export default function () {
           theme: "dark",
           transition: Slide,
         });
-        // window.location.reload();
       }
     });
     nav("/");
@@ -63,19 +65,43 @@ export default function () {
     nav("/home");
   }
 
+  const handlePopUp = (user) => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
   return (
     <>
       <div className="delete_container">
         <div className="delete_content">
           <h2>Voulez-vous supprimer votre compte ?</h2>
           <div className="delete_buttons">
-            <button onClick={handleDelete} className="delete_button_delete">
+            <button onClick={handlePopUp} className="delete_button_delete">
               Supprimer
             </button>
             <button onClick={handleCancel} className="cancel_button">
               Annuler
             </button>
           </div>
+          {isPopupOpen && (
+            <div className="edit_user_overlay">
+              <div className="edit_user_content">
+                <h2>Confirmer la suppression</h2>
+                <p>Voulez-vous vraiment supprimer votre compte ?</p>
+                <div className="to_center">
+                  <button onClick={handleDelete} className="confirm_button">
+                    Confirmer
+                  </button>
+                  <button onClick={closePopup} className="cancel_button">
+                    Annuler
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

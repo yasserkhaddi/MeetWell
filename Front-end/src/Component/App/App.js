@@ -26,6 +26,8 @@ import AdminAccess from "../Admin/adminAcces/AdminAccess";
 import AddUser from "../Admin/adminAcces/AddUser/AddUser";
 import UpdateToUser from "../Admin/adminAcces/updateToAdmin/UpdateToAdmin";
 import "../../Styles/app/app.css";
+import ForgetPassword from "../Authentification/ForgetPassword";
+import ResetPassword from "../Authentification/ResetPassword";
 
 export default function App() {
   const existingUser = !!cookie.get("access_token");
@@ -45,7 +47,9 @@ export default function App() {
     if (
       !existingUser &&
       window.location.pathname !== "/signup" &&
-      window.location.pathname !== "/"
+      window.location.pathname !== "/" &&
+      window.location.pathname !== "/forgot-password" &&
+      window.location.pathname !== "/reset-password"
     ) {
       nav("/");
     }
@@ -53,20 +57,31 @@ export default function App() {
       console.error("User cookie is invalid.");
       nav("/");
     }
+    if (
+      existingUser &&
+      userInfo?.isAdmin &&
+      ["/", "/signup", "/forgot-password", "/reset-password"].includes(
+        window.location.pathname
+      )
+    ) {
+      nav("/admin/home");
+    }
   }, [existingUser, userInfo, nav]);
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer limit={1} draggable />
       <Routes>
         {/* Redirect Admin from Login, Signup, Home, Profile */}
         {!userInfo?.isAdmin && (
           <>
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Registration />} />
+            <Route path="/forgot-password" element={<ForgetPassword />} />
             <Route path="/home" element={<Home />} />
             <Route path="/loading" element={<Loading />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </>
         )}
 
