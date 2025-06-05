@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Slide } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { logIn, GoogleAuth } from "../../Redux/Users/actions";
+import {
+  logIn,
+  GoogleAuth,
+  sendVerificationLink,
+} from "../../Redux/Users/actions";
 import cookie from "js-cookie";
 import logo from "../../tools/logo/logo.png";
 import "react-toastify/dist/ReactToastify.css";
@@ -81,18 +85,22 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (error) {
-      toast.error("Adresse e-mail ou mot de passe incorrect", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Slide,
-      });
+    if (error === "Vous n'êtes pas vérifié") {
+      toast.error(
+        `${error} un lien de vérification a été envoyé à votre adresse e-mail.`,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        }
+      );
+      dsp(sendVerificationLink(formData.email));
     }
   }, [error]);
 

@@ -11,8 +11,7 @@ import {
   deleteAppointPer,
 } from "../../../Redux/Admin/action";
 import { toast, Slide } from "react-toastify";
-
-
+import Loading from "../../Loading/Loading";
 
 export const DescriptionPopup = ({ description, closePopup }) => {
   return (
@@ -105,7 +104,7 @@ export default function ExpiredAppointments() {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   const handelDelete = (id) => {

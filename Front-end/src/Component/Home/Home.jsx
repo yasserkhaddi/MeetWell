@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import cookie from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,9 +33,11 @@ export default function Home() {
 
   const { appointment } = useSelector((state) => state.appointment);
 
-  if (!existingUser) {
-    nav("/");
-  }
+  useEffect(() => {
+    if (!existingUser || !userCookies || !userInfo) {
+      nav("/");
+    }
+  }, [existingUser, userCookies, userInfo, nav]);
 
   useEffect(() => {
     if (userCookies && userInfo) {

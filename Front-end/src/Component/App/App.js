@@ -28,6 +28,7 @@ import UpdateToUser from "../Admin/adminAcces/updateToAdmin/UpdateToAdmin";
 import "../../Styles/app/app.css";
 import ForgetPassword from "../Authentification/ForgetPassword";
 import ResetPassword from "../Authentification/ResetPassword";
+import EmailVerification from "../Authentification/EmailVerification";
 
 export default function App() {
   const existingUser = !!cookie.get("access_token");
@@ -49,20 +50,37 @@ export default function App() {
       window.location.pathname !== "/signup" &&
       window.location.pathname !== "/" &&
       window.location.pathname !== "/forgot-password" &&
-      window.location.pathname !== "/reset-password"
+      window.location.pathname !== "/reset-password" &&
+      window.location.pathname !== "/email-verification"
+      // window.location.pathname !== "/loading"
     ) {
       nav("/");
+      return;
     }
     if (existingUser && !userInfo) {
       console.error("User cookie is invalid.");
       nav("/");
+      return;
+    }
+    if (
+      existingUser &&
+      userInfo &&
+      !userInfo.isVerified &&
+      window.location.pathname !== "/verifie-email"
+    ) {
+      nav("/verifie-email");
+      return;
     }
     if (
       existingUser &&
       userInfo?.isAdmin &&
-      ["/", "/signup", "/forgot-password", "/reset-password"].includes(
-        window.location.pathname
-      )
+      [
+        "/",
+        "/signup",
+        "/forgot-password",
+        "/reset-password",
+        "/email-verification",
+      ].includes(window.location.pathname)
     ) {
       nav("/admin/home");
     }
@@ -82,6 +100,7 @@ export default function App() {
             <Route path="/loading" element={<Loading />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/email-verification" element={<EmailVerification />} />
           </>
         )}
 

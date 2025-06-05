@@ -20,10 +20,68 @@ class userController {
   async logIn(req, res) {
     try {
       const result = await user.logIn(req.body);
+      if (result.user.isVerified === true) {
+        if (result.valid) {
+          // Set the cookies
+          res.cookie(USER_COOKIE_ONE, result.token, {
+            sameSite: "Lax",
+            secure: false,
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+            path: "/",
+          });
+          res.cookie(USER_COOKIE_TWO, JSON.stringify(result.user), {
+            sameSite: "Lax",
+            secure: false,
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+            path: "/",
+          });
 
+          return res.status(result.status).json({
+            message: result.message,
+            user: {
+              ...result.user,
+              isAdmin: result.user.isAdmin,
+              isVerified: result.user.isVerified,
+            },
+          });
+        } else {
+          return res.status(result.status).json({ message: result.message });
+        }
+      } else {
+        return res.status(400).json({
+          message: "Vous n'êtes pas vérifié",
+          user: {
+            ...result.user,
+            isAdmin: result.user.isAdmin,
+            isVerified: result.user.isVerified,
+          },
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  //send email verification
+  async sendVerificationLink(req, res) {
+    try {
+      const result = await user.sendVerificationLink(req.body.email);
+      return res.status(result.status).json({ message: result.message });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  //email verification decodage logic
+  async emailVerification(req, res) {
+    try {
+      const { token } = req.body;
+
+      const result = await user.emailVerification(token);
       if (result.valid) {
         // Set the cookies
-        res.cookie(USER_COOKIE_ONE, result.token, {
+        res.cookie(USER_COOKIE_ONE, result.token2, {
           sameSite: "Lax",
           secure: false,
           expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
@@ -35,16 +93,9 @@ class userController {
           expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
           path: "/",
         });
-
-        return res.status(result.status).json({
-          message: result.message,
-          user: {
-            ...result.user,
-            isAdmin: result.user.isAdmin,
-          },
-        });
-      } else {
-        return res.status(result.status).json({ message: result.message });
+        return res
+          .status(result.status)
+          .json({ message: result.message, user: result.user });
       }
     } catch (err) {
       console.error(err);

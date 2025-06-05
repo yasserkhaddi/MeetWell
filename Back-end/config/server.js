@@ -8,12 +8,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-const FRONT_URL = process.env.FRONT_URL;
-
 app.use(
   cors({
-    // origin: FRONT_URL,
-    origin: ["http://localhost:3000", "http://192.168.1.11:3000"],
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );

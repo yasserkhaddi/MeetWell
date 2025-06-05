@@ -9,4 +9,6 @@ router.get("/fetch/:userId", appoint.fetchAppoint);
 router.delete("/delete/:id", appoint.deleteAppoint);
 router.get("/taken-time/:date", appoint.fetchedAppointByDay);
 router.post("/move_expired_appoint", appoint.moveExpiredAppointments);
+router.post("/send_email_reminder", appoint.sendMessage);
+
 module.exports = router;

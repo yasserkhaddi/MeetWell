@@ -9,15 +9,24 @@ export const signUp = createAsyncThunk("auth/signup", async (formData) => {
   return result.data;
 });
 
-export const logIn = createAsyncThunk("auth/login", async (formData) => {
-  const result = await axios.post(
-    "http://localhost:5050/user/login",
+export const logIn = createAsyncThunk(
+  "auth/login",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const result = await axios.post(
+        "http://localhost:5050/user/login",
 
-    formData,
-    { withCredentials: true }
-  );
-  return result.data;
-});
+        formData,
+        { withCredentials: true }
+      );
+      return result.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Une erreur est survenue"
+      );
+    }
+  }
+);
 
 export const GoogleAuth = createAsyncThunk("auth/google", async (userData) => {
   const result = await axios.post(
@@ -120,6 +129,31 @@ export const resetPassword = createAsyncThunk(
     const result = await axios.post(
       "http://localhost:5050/user/reset-password",
       { token, password }
+    );
+    return result.data;
+  }
+);
+
+export const emailVerification = createAsyncThunk(
+  "User/emailVerification",
+  async (token) => {
+    const result = await axios.post(
+      "http://localhost:5050/user/email-verification",
+      { token },
+      { withCredentials: true }
+    );
+    console.log(result);
+
+    return result.data;
+  }
+);
+
+export const sendVerificationLink = createAsyncThunk(
+  "User/VerificationLink",
+  async (email) => {
+    const result = await axios.post(
+      "http://localhost:5050/user/verification-email",
+      { email }
     );
     return result.data;
   }

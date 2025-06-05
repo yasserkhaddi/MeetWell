@@ -22,6 +22,11 @@ pm2.connect((err) => {
       script: "./Services/AdminService/app.js",
       watch: true,
     },
+    {
+      name: "Auto-sender-service",
+      script: "./Services/AutoSenderEmail/app.js",
+      watch: true,
+    },
   ];
 
   services.forEach((service) => {

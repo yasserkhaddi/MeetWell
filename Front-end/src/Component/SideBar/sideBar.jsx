@@ -28,7 +28,7 @@ export default function SideBar() {
   }, [existingUser, userInfo]);
 
   useEffect(() => {
-    if (userInfo.isAdmin) {
+    if (userInfo?.isAdmin) {
       setSidebarItems([
         { icon: <Home />, text: "Accueil", link: "/home" },
         { icon: <User />, text: "Profil", link: "/profile" },

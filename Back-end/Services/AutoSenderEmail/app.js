@@ -1,14 +1,13 @@
-const router = require("./Routes/userRoutes");
-
 const app = require("../../config/server");
 require("dotenv").config();
+const cronJob = require("./confirmationEmail.js");
 
-app.use("/user", router);
+const AUTO_SENDER_PORT = process.env.AUTO_SENDER_PORT;
 
-const USER_PORT = process.env.USER_PORT;
-
-const port = USER_PORT || 5050;
+const port = AUTO_SENDER_PORT || 7070;
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`server connected successfuly on ${port}`);
 });
+
+cronJob.start();

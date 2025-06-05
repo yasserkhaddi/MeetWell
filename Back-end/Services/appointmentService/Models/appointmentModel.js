@@ -1,5 +1,14 @@
-const { appoint, expiredAppoint, deletedAppoint } = require("../../../config/db");
+const {
+  appoint,
+  expiredAppoint,
+  deletedAppoint,
+  users,
+} = require("../../../config/db");
 const { ObjectId } = require("mongodb");
+const nodemailer = require("nodemailer");
+const moment = require("moment");
+const fs = require("fs");
+const path = require("path");
 
 class AppointmentModel {
   // Add appointment
@@ -26,10 +35,42 @@ class AppointmentModel {
         date,
         description,
         time,
+        reminderSent: false,
         timeSaved: new Date().toISOString().slice(0, 16).replace("T", " "),
       };
 
       const addAppoint = await appoint.insertOne(newAppoint);
+
+      const user = await users.findOne({ _id: new ObjectId(userId) });
+
+      //sending email
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.GOOGLE_APP_PASSWORD,
+        },
+      });
+
+      const templtepath = path.join(
+        __dirname,
+        "../../UserService/Utils/templates_html/emailConfirmation.html"
+      );
+      let htmlTemplate = fs.readFileSync(templtepath, "utf-8");
+
+      htmlTemplate = htmlTemplate
+        .replace(/{{NOM}}/g, user.nom)
+        .replace(/{{PRENOM}}/g, user.prenom)
+        .replace(/{{DATE}}/g, date)
+        .replace(/{{HEURE}}/g, time);
+
+      await transporter.sendMail({
+        from: '"APPTIQ Support" <support@apptiq.com>',
+        to: user.email,
+        subject: "Confirmation de rendez-vous ",
+        html: htmlTemplate,
+      });
 
       return {
         status: 200,
@@ -37,6 +78,77 @@ class AppointmentModel {
         message: "Appointment added successfully",
         addAppoint,
       };
+    } catch (err) {
+      console.error(err);
+      return { status: 500, success: false, message: err.message };
+    }
+  }
+
+  //send message before 1h
+
+  async sendMessage() {
+    try {
+      const now = moment();
+      const targetTime = now.clone().add(1, "hour");
+
+      const allAppointments = await appoint.find().toArray();
+
+      const upcomingAppointments = allAppointments.filter((app) => {
+        if (app.reminderSent) return false;
+
+        const appointmentStartTime = app.time.split("->")[0].trim();
+        const appointmentDateTime = moment(
+          `${app.date} ${appointmentStartTime}`,
+          "YYYY-MM-DD HH:mm"
+        );
+        const diffInMinutes = appointmentDateTime.diff(targetTime, "minutes");
+        return Math.abs(diffInMinutes) <= 15;
+      });
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.GOOGLE_APP_PASSWORD,
+        },
+      });
+
+      for (const app of upcomingAppointments) {
+        const user = await users.findOne({ _id: new ObjectId(app.userId) });
+
+        if (!user || !user.email) {
+          console.warn(
+            `User not found or email missing for appointment ID ${app._id}`
+          );
+          continue;
+        }
+
+        const templtepath = path.join(
+          __dirname,
+          "../../UserService/Utils/templates_html/reminderEmail.html"
+        );
+        let htmlTemplate = fs.readFileSync(templtepath, "utf-8");
+
+        htmlTemplate = htmlTemplate
+          .replace(/{{NOM}}/g, user.nom)
+          .replace(/{{PRENOM}}/g, user.prenom)
+          .replace(/{{DATE}}/g, app.date)
+          .replace(/{{HEURE}}/g, app.time);
+
+        await transporter.sendMail({
+          from: '"APPTIQ Support" <support@apptiq.com>',
+          to: user.email,
+          subject: "Rappel de rendez-vous",
+          html: htmlTemplate,
+        });
+
+        await appoint.updateOne(
+          { _id: app._id },
+          { $set: { reminderSent: true } }
+        );
+      }
+
+      return { status: 200, success: true, message: "Messages sent" };
     } catch (err) {
       console.error(err);
       return { status: 500, success: false, message: err.message };

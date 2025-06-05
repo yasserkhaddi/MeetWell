@@ -45,6 +45,21 @@ class AppointmentController {
       console.error(err);
     }
   }
+
+  //  //send message before 1h
+  async sendMessage(req, res) {
+    try {
+      const result = await appoint.sendMessage();
+
+      return res.status(result.status).json({ message: result.message });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({
+        message: "An unexpected error occurred.",
+      });
+    }
+  }
+
   // delete appoint
   async deleteAppoint(req, res) {
     const { id } = req.params;

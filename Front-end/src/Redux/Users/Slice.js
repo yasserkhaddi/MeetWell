@@ -11,6 +11,8 @@ import {
   searchAccounts,
   generateEmail,
   resetPassword,
+  emailVerification,
+  sendVerificationLink,
 } from "./actions";
 
 const initialState = {
@@ -51,7 +53,7 @@ const userslice = createSlice({
         state.user = action.payload;
       })
       .addCase(logIn.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload;
         console.log(state.error);
 
         state.loading = false;
@@ -183,6 +185,34 @@ const userslice = createSlice({
         state.error = null;
       })
       .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //.....................email Verification................................
+      .addCase(emailVerification.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(emailVerification.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(emailVerification.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //.....................Verification link................................
+      .addCase(sendVerificationLink.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(sendVerificationLink.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(sendVerificationLink.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

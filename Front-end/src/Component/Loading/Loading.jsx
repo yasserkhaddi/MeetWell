@@ -1,4 +1,3 @@
-import React from "react";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import "../../Styles/loading/loading.css";
 export default function Loading() {

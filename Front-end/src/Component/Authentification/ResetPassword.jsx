@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { toast, Slide } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { resetPassword } from "../../Redux/Users/actions";
 import "../../Styles/Users/auth/resetPassword.css";
+import Loading from "../Loading/Loading";
 
 export default function ResetPassword() {
   const [params] = useSearchParams();
   const token = params.get("token");
   const [password, setPassword] = useState("");
   const [ConfPassword, setConfPassword] = useState("");
+
+  const { loading } = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
   const nav = useNavigate();
@@ -87,6 +89,7 @@ export default function ResetPassword() {
             </button>
           </form>
         </div>
+        {loading && <Loading />}
       </div>
     </>
   );

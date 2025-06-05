@@ -5,8 +5,12 @@ const { ObjectId } = require("mongodb");
 const moment = require("moment");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
+const fs = require("fs");
+const path = require("path");
+const { log } = require("console");
 
 const SECRET_CODE = process.env.SECRET_CODE;
+const FRONT_URL = process.env.FRONT_URL;
 
 class UserModel {
   //registration
@@ -37,7 +41,127 @@ class UserModel {
         };
         //create new user
         await users.insertOne(newUser);
+
+        //send email
+        const token = jwt.sign({ id: newUser._id }, SECRET_CODE, {
+          expiresIn: "15m",
+        });
+
+        const link = `${FRONT_URL}/email-verification?token=${token}`;
+
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: process.env.EMAIL,
+            pass: process.env.GOOGLE_APP_PASSWORD,
+          },
+        });
+
+        const templtepath = path.join(
+          __dirname,
+          "../Utils/templates_html/emailVerification.html"
+        );
+        let htmlTemplate = fs.readFileSync(templtepath, "utf-8");
+
+        htmlTemplate = htmlTemplate
+          .replace(/{{LINK}}/g, link)
+          .replace(/{{NOM}}/g, newUser.nom)
+          .replace(/{{PRENOM}}/g, newUser.prenom);
+
+        await transporter.sendMail({
+          from: '"APPTIQ Support" <support@apptiq.com>',
+          to: email,
+          subject: "Vérifiez votre adresse email",
+          html: htmlTemplate,
+        });
+
         return { status: 201, message: "Utilisateur crées avec succès" };
+      }
+    } catch (err) {
+      console.error(err);
+      return { status: 400, success: false, message: err.message };
+    }
+  }
+
+  async sendVerificationLink(email) {
+    try {
+      const user = await users.findOne({ email: email });
+      if (!user) {
+        return { status: 404, message: "Utilisateur introuvable" };
+      }
+      const token = jwt.sign({ id: user._id }, SECRET_CODE, {
+        expiresIn: "15m",
+      });
+
+      const link = `${FRONT_URL}/email-verification?token=${token}`;
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.GOOGLE_APP_PASSWORD,
+        },
+      });
+
+      const templtepath = path.join(
+        __dirname,
+        "../Utils/templates_html/emailVerification.html"
+      );
+      let htmlTemplate = fs.readFileSync(templtepath, "utf-8");
+
+      htmlTemplate = htmlTemplate
+        .replace(/{{LINK}}/g, link)
+        .replace(/{{NOM}}/g, user.nom)
+        .replace(/{{PRENOM}}/g, user.prenom);
+
+      await transporter.sendMail({
+        from: '"APPTIQ Support" <support@apptiq.com>',
+        to: email,
+        subject: "Vérifiez votre adresse email",
+        html: htmlTemplate,
+      });
+      return {
+        status: 200,
+        success: true,
+        message: "Lien de vérification envoyé avec succès",
+      };
+    } catch (err) {
+      console.error(err);
+      return { status: 400, success: false, message: err.message };
+    }
+  }
+
+  //email verificatio decodage logic
+
+  async emailVerification(token) {
+    if (!token) return res.status(400).json({ message: "Token manquant" });
+    try {
+      const decoded = jwt.verify(token, SECRET_CODE);
+
+      const user = await users.findOne({ _id: new ObjectId(decoded.id) });
+      console.log(user);
+
+      if (!user) {
+        return { status: 404, message: "Invalid token" };
+      } else {
+        const test = await users.updateOne(
+          { _id: new ObjectId(decoded.id) },
+          { $set: { isVerified: true } }
+        );
+        const token2 = jwt.sign({ id: user._id }, SECRET_CODE);
+        console.log(test);
+
+        return {
+          status: 201,
+          message: "Se connecter avec succès",
+          token2,
+          user: {
+            ...user,
+            isAdmin: user.isAdmin,
+            isVerified: true,
+          },
+          valid: true,
+        };
       }
     } catch (err) {
       console.error(err);
@@ -80,6 +204,7 @@ class UserModel {
             user: {
               ...existingUser,
               isAdmin: existingUser.isAdmin,
+              isVerified: existingUser.isVerified,
             },
             valid: true,
           };
@@ -109,6 +234,7 @@ class UserModel {
           user: {
             ...existingUser,
             isAdmin: existingUser.isAdmin,
+            isVerified: existingUser.isVerified,
           },
           valid: true,
         };
@@ -118,7 +244,7 @@ class UserModel {
           nom,
           prenom,
           dateDeNaissance,
-          isVerified: false,
+          isVerified: true,
           isAdmin: false,
           isUser: true,
           role: "user",
@@ -182,35 +308,46 @@ class UserModel {
           expiresIn: "15m",
         });
 
-        const link = `http://localhost:3000/reset-password?token=${token}`;
+        const link = `${FRONT_URL}/reset-password?token=${token}`;
 
         //sending email
 
         const transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
-            user: "yasserkhaddi003@gmail.com",
+            user: process.env.EMAIL,
             pass: process.env.GOOGLE_APP_PASSWORD,
           },
         });
 
+        const templtepath = path.join(
+          __dirname,
+          "../utils/templates_html/passwordUpdate.html"
+        );
+        let htmlTemplate = fs.readFileSync(templtepath, "utf-8");
+
+        htmlTemplate = htmlTemplate
+          .replace(/{{LINK}}/g, link)
+          .replace(/{{NOM}}/g, user.nom)
+          .replace(/{{PRENOM}}/g, user.prenom);
+
         await transporter.sendMail({
           from: '"APPTIQ Support" <support@apptiq.com>',
           to: email,
-          subject: "Password Reset",
-          html: `<p>Click <a href="${link}">here</a> to reset your password.</p>`,
+          subject: "Réinitialisation du mot de passe",
+          html: htmlTemplate,
         });
         return { status: 201, message: "reset link sent" };
       }
     } catch (error) {
-      console.error(err);
-      return { status: 400, success: false, message: err.message };
+      console.error(error);
+      return { status: 400, success: false, message: error.message };
     }
   }
   // reset password
   async resetPassword(token, password) {
     try {
-      const decoded = jwt.verify(token, process.env.SECRET_CODE);
+      const decoded = jwt.verify(token, SECRET_CODE);
       const user = await users.findOne({ _id: new ObjectId(decoded._id) });
 
       if (!user) {

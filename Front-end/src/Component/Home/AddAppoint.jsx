@@ -19,7 +19,7 @@ export default function AddAppoint({ userInfo }) {
   const [daysOff, setDaysOff] = useState([]);
 
   const dispatch = useDispatch();
-  const { takenTimes, loading } = useSelector((state) => state.appointment);
+  const { takenTimes } = useSelector((state) => state.appointment);
   const times = takenTimes?.times || [];
 
   useEffect(() => {
@@ -118,7 +118,7 @@ export default function AddAppoint({ userInfo }) {
   };
 
   const maxDateObj = new Date();
-  maxDateObj.setFullYear(maxDateObj.getFullYear() + 10);
+  maxDateObj.setFullYear(maxDateObj.getFullYear() + 5);
   const maxDate = maxDateObj.toISOString().split("T")[0];
 
   return (

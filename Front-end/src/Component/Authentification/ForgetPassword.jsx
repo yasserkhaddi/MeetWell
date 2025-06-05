@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../../Styles/Users/auth/fogetPassword.css";
 import { generateEmail, searchAccounts } from "../../Redux/Users/actions";
 import { toast, Slide } from "react-toastify";
 import PopupConfirm from "./popupConfirm";
+import Loading from "../Loading/Loading";
 
 export default function ForgetPassword() {
   const [fEmail, setFEmail] = useState("");
@@ -12,6 +13,7 @@ export default function ForgetPassword() {
   const [popup, setPopup] = useState(false);
 
   const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.users);
 
   const handlesearch = (email) => {
     if (fEmail === "") {
@@ -125,6 +127,7 @@ export default function ForgetPassword() {
         </div>
 
         {/* popup */}
+        {loading && <Loading />}
       </div>
       {popup && <PopupConfirm />}
     </>

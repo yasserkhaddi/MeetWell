@@ -1,0 +1,21 @@
+.email_verification_container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* background-color: rgb(49, 51, 58); */
+  background-color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.email_verification_content {
+  width: 70%;
+  background-color: rgb(49, 51, 58);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

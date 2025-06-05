@@ -27,7 +27,7 @@ export default function Registration() {
   const [errorTriggered, setErrorTriggered] = useState(false);
   const nav = useNavigate();
   const dsp = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.users);
+  const { loading, error } = useSelector((state) => state.users);
 
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -160,7 +160,7 @@ export default function Registration() {
                 onChange={handleOnChange}
                 className="reg_input"
               />
-              <label className="reg_label">Prenom :</label>
+              <label className="reg_label">Prénom :</label>
               <input
                 type="text"
                 name="prenom"

@@ -5,6 +5,7 @@ import {
   deleteAppoint,
   fetchTakenTime,
   expiredAppointment,
+  sendMessage,
 } from "./actions";
 
 const initialState = {
