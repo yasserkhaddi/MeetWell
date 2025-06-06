@@ -66,9 +66,9 @@ export default function App() {
       existingUser &&
       userInfo &&
       !userInfo.isVerified &&
-      window.location.pathname !== "/verifie-email"
+      window.location.pathname !== "/email-verification"
     ) {
-      nav("/verifie-email");
+      nav("/email-verification");
       return;
     }
     if (

@@ -85,6 +85,7 @@ export default function InfoPerso() {
         email: currentUser.email,
         dateDeNaissance: currentUser.dateDeNaissance,
         isAdmin: currentUser.isAdmin,
+        isVerified: currentUser.isVerified,
         PhoneNumber: PhoneNumber,
       };
       dispatch(editUser({ id: userInfo._id, formData: formData })).then(
