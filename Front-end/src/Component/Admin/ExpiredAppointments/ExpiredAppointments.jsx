@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import NavBar from "../AdminNavBar/NavBar";
-import "../../../Styles/admin/expiredAppointments.css";
 import { useNavigate } from "react-router-dom";
 import { House, Trash2, SquareArrowUp } from "lucide-react";
+import { toast, Slide } from "react-toastify";
 import ExpiredAppointmentSearchBar from "./ExpiredAppointmentSearchBar";
 import {
   fetchExpiredAppointments,
   fetchUser,
   deleteAppointPer,
 } from "../../../Redux/Admin/action";
-import { toast, Slide } from "react-toastify";
 import Loading from "../../Loading/Loading";
+import "../../../Styles/admin/expiredAppointments.css";
 
 export const DescriptionPopup = ({ description, closePopup }) => {
   return (

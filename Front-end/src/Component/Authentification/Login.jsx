@@ -113,7 +113,6 @@ export default function Login() {
 
       const firstName = result.user.displayName.split(" ")[0];
       const lastName = result.user.displayName.split(" ")[1];
-      console.log(result.user);
       const r = result.user;
       const userData = {
         email: r.email,

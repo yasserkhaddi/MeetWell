@@ -7,7 +7,6 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
-const { log } = require("console");
 
 const SECRET_CODE = process.env.SECRET_CODE;
 const FRONT_URL = process.env.FRONT_URL;
@@ -348,16 +347,21 @@ class UserModel {
   async resetPassword(token, password) {
     try {
       const decoded = jwt.verify(token, SECRET_CODE);
-      const user = await users.findOne({ _id: new ObjectId(decoded._id) });
+      const user = await users.findOne({ _id: new ObjectId(decoded.id) });
 
       if (!user) {
+        console.log("no User");
+
         return { status: 404, message: "Invalid token" };
       } else {
+        console.log("success");
+
         const hashedPassword = await bcrypt.hash(password, 10);
         await users.updateOne(
-          { _id: new ObjectId(decoded._id) },
+          { _id: new ObjectId(decoded.id) },
           { $set: { password: hashedPassword } }
         );
+
         return { status: 200, message: "Password reset successfully" };
       }
     } catch (err) {

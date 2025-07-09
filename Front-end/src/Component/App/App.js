@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import cookie from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
@@ -25,10 +25,11 @@ import DaysOff from "../Admin/Settings/DaysOff";
 import AdminAccess from "../Admin/adminAcces/AdminAccess";
 import AddUser from "../Admin/adminAcces/AddUser/AddUser";
 import UpdateToUser from "../Admin/adminAcces/updateToAdmin/UpdateToAdmin";
-import "../../Styles/app/app.css";
 import ForgetPassword from "../Authentification/ForgetPassword";
 import ResetPassword from "../Authentification/ResetPassword";
 import EmailVerification from "../Authentification/EmailVerification";
+import ExpiredDaysOff from "../Admin/Settings/ExpiredDaysOff";
+import "../../Styles/app/app.css";
 
 export default function App() {
   const existingUser = !!cookie.get("access_token");
@@ -52,7 +53,6 @@ export default function App() {
       window.location.pathname !== "/forgot-password" &&
       window.location.pathname !== "/reset-password" &&
       window.location.pathname !== "/email-verification"
-      // window.location.pathname !== "/loading"
     ) {
       nav("/");
       return;
@@ -144,6 +144,10 @@ export default function App() {
             />
             <Route path="/admin/settings" element={<SettingsMenu />} />
             <Route path="/admin/setting/days-off" element={<DaysOff />} />
+            <Route
+              path="/admin/setting/expired-days-off"
+              element={<ExpiredDaysOff />}
+            />
             <Route path="/admin/access" element={<AdminAccess />} />
             <Route path="/admin/access/add/user" element={<AddUser />} />
             <Route path="/admin/access/add/admin" element={<UpdateToUser />} />

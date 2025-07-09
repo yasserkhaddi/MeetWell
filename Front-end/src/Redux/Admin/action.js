@@ -215,6 +215,45 @@ export const addDisabledDate = createAsyncThunk(
   }
 );
 
+export const addDisabledDateRange = createAsyncThunk(
+  "admin/addDisabledDateRange",
+  async ({ startDate, endDate, description }, { rejectWithValue }) => {
+    try {
+      const result = await axios.post(
+        "http://localhost:6060/admin/add-disabled-date-range",
+        { startDate, endDate, description }
+      );
+      return result.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const moveExpiredDaysOff = createAsyncThunk(
+  "admin/moveDisableDaysOff",
+  async (_, { rejectWithValue }) => {
+    try {
+      const result = await axios.post(
+        "http://localhost:6060/admin/move-expired-dates"
+      );
+      return result.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const fetchExpiredDaysOff = createAsyncThunk(
+  "admin/fetchExpiredDaysOff",
+  async () => {
+    const result = await axios.get(
+      "http://localhost:6060/admin/days-off-archive"
+    );
+    return result.data;
+  }
+);
+
 export const removeDisabledDate = createAsyncThunk(
   "admin/removeDisabledDate",
   async (date) => {

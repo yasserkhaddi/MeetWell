@@ -1,13 +1,10 @@
 const {
-  users,
   appoint,
   expiredAppoint,
   deletedAppointByAdmin,
   deletedAppoint,
-  days,
 } = require("../../../config/db");
 const { ObjectId } = require("mongodb");
-const bcrypt = require("bcryptjs");
 
 class AdminAppointModel {
   async fetchUserAppointment(userId) {

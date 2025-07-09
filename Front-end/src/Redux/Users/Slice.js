@@ -54,7 +54,7 @@ const userslice = createSlice({
       })
       .addCase(logIn.rejected, (state, action) => {
         state.error = action.payload;
-        console.log(state.error);
+       
 
         state.loading = false;
       })
@@ -71,7 +71,7 @@ const userslice = createSlice({
       })
       .addCase(GoogleAuth.rejected, (state, action) => {
         state.error = action.error.message;
-        console.log(state.error);
+     
 
         state.loading = false;
       })

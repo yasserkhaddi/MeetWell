@@ -1,11 +1,4 @@
-const {
-  users,
-  appoint,
-  expiredAppoint,
-  deletedAppointByAdmin,
-  deletedAppoint,
-  days,
-} = require("../../../config/db");
+const { users } = require("../../../config/db");
 const { ObjectId } = require("mongodb");
 const bcrypt = require("bcryptjs");
 const moment = require("moment");

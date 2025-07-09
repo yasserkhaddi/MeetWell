@@ -142,7 +142,7 @@ export const emailVerification = createAsyncThunk(
       { token },
       { withCredentials: true }
     );
-    console.log(result);
+
 
     return result.data;
   }

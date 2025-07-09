@@ -77,6 +77,20 @@ class adminController {
 
   //------------------------------------------------------------------------------------------
 
+  async addDisabledDatesRange(req, res) {
+    try {
+      console.log(req.body);
+
+      const result = await admin.addDisabledDatesRange(req.body);
+      res.status(result.status).json({ message: result.message });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  //------------------------------------------------------------------------------------------
+
   async removeDisabledDate(req, res) {
     try {
       const result = await admin.removeDisabledDate(req.body.date.date);
@@ -84,7 +98,34 @@ class adminController {
         message: result.message,
       });
     } catch (err) {
-      this.handleError(res, err);
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  //------------------------------------------------------------------------------------------
+
+  async moveExpiredDays(req, res) {
+    try {
+      const result = await admin.moveExpiredDays();
+      res.status(result.status).json({ message: result.message });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  //------------------------------------------------------------------------------------------
+
+  async fetchExpiredDaysOff(req, res) {
+    try {
+      const result = await admin.fetchExpiredDaysOff();
+      res.status(result.status).json({
+        message: result.message,
+        expiredDaysOff: result.expiredDaysOff,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
     }
   }
 

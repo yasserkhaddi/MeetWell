@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../../../Styles/admin/passwordPopup.css";
 import { SquareChevronUp } from "lucide-react";
 

@@ -126,3 +126,11 @@ option:focus {
   align-items: center;
   margin-right: 50px;
 }
+
+.mode_toggle {
+  width: 100%;
+  display: flex;
+gap: 20px;
+  justify-content: center;
+  align-items: center;
+}

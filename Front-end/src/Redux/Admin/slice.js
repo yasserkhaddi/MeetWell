@@ -26,6 +26,9 @@ import {
   upgradToAdmin,
   fetchAllUsers,
   downgradeToUser,
+  addDisabledDateRange,
+  moveExpiredDaysOff,
+  fetchExpiredDaysOff,
 } from "./action";
 
 const initialState = {
@@ -35,6 +38,7 @@ const initialState = {
   deletedAppointments: null,
   deletedAppointmentsByUser: null,
   disabledDates: [],
+  expiredDaysOff: [],
   loading: false,
   error: null,
 };
@@ -381,6 +385,48 @@ const adminSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(downgradeToUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //.......................add Disabled Date Range............................
+
+      .addCase(addDisabledDateRange.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addDisabledDateRange.fulfilled, (state, action) => {
+        state.loading = false;
+        state.disabledDates = action.payload;
+      })
+      .addCase(addDisabledDateRange.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //.......................move Expired Days Off............................
+
+      .addCase(moveExpiredDaysOff.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(moveExpiredDaysOff.fulfilled, (state, action) => {
+        state.loading = false;
+        state.expiredDaysOff = action.payload;
+      })
+      .addCase(moveExpiredDaysOff.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      //.......................fetch Expired Days Off............................
+
+      .addCase(fetchExpiredDaysOff.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchExpiredDaysOff.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(fetchExpiredDaysOff.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

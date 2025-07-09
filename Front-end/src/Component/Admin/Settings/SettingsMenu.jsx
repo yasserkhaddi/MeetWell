@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { House } from "lucide-react";
 import NavBar from "../AdminNavBar/NavBar";
@@ -8,10 +8,10 @@ export default function SettingsMenu() {
 
   const adminCards = [
     { name: "Ajuster les jours de congé", link: "/admin/setting/days-off" },
-    // {
-    //   name: "Signaler un rendez-vous",
-    //   link: "/admin/setting/report",
-    // },
+    {
+      name: "Ajuster les jours de congé expirés",
+      link: "/admin/setting/expired-days-off",
+    },
   ];
 
   useEffect(() => {

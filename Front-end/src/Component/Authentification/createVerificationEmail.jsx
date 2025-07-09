@@ -25,9 +25,7 @@ export default function CreateVerificationEmail() {
           theme: "dark",
           transition: Slide,
         });
-      } else {
-        console.log(r);
-      }
+      } 
     });
   };
   return (

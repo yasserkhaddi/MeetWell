@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
+html,
 body {
   font-family: "Fredoka", sans-serif;
   font-optical-sizing: auto;
@@ -6,4 +7,5 @@ body {
   font-style: normal;
   font-variation-settings: "wdth" 100;
   margin: 0;
+  padding: 0;
 }

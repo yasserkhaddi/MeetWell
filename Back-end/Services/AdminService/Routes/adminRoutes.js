@@ -49,8 +49,11 @@ router.put("/edit-admin-password/:id", admin.changeAdminPassword);
 router.delete("/deleteAccount/:id", admin.deleteAccount);
 
 router.post("/add-disabled-date", admin.addDisabledDate);
+router.post("/add-disabled-date-range", admin.addDisabledDatesRange);
+router.post("/move-expired-dates", admin.moveExpiredDays);
 router.delete("/remove-disabled-date", admin.removeDisabledDate);
 router.get("/days-off", admin.fetchDaysOff);
+router.get("/days-off-archive", admin.fetchExpiredDaysOff);
 router.put("/upgrade-to-admin/:id", admin.UpgradeToAdmin);
 router.put("/downgrade-to-user/:id", admin.downgradeToUser);
 module.exports = router;

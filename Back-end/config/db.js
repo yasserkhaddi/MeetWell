@@ -10,6 +10,9 @@ const appoint = client.db("MeetWell").collection("appointments");
 const expiredAppoint = client.db("MeetWell").collection("expiredAppointments");
 const deletedAppoint = client.db("MeetWell").collection("deletedAppoint");
 const days = client.db("MeetWell").collection("days");
+const daysOffArchive = client.db("MeetWell").collection("daysOffArchive");
+
+
 const deletedAppointByAdmin = client
   .db("MeetWell")
   .collection("appointmentsDeletedByAdmin");
@@ -21,4 +24,5 @@ module.exports = {
   deletedAppoint,
   deletedAppointByAdmin,
   days,
+  daysOffArchive,
 };
